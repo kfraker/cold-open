@@ -11,7 +11,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - The repo is public at `kfraker/cold-open` under the MIT license, with `main` and `dev` branches.
   - It has a README written for visitors that only claims what exists, a changelog, release notes, a contribution guide with Definitions of Ready and Done, a pull request template, and a decision log.
   - Text files use LF line endings, and `.env` files are ignored by Git.
-- **0.2 Planning documents** (M).
+- **0.2 Planning documents** (M). *Done.*
   - The repo has a product brief (problem, users, goals, non-goals, success measures), non-functional targets, an architecture and services map with free-tier limits, a threat model, release safety, risks, and a process record.
   - Each target and threat names the test or check that will prove it.
   - The owner has approved them.

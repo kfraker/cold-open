@@ -27,7 +27,13 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 Planned: unit tests with coverage, browser tests on desktop and phone sizes in Chromium, Firefox and WebKit, automated accessibility checks (WCAG 2.2 AA), a performance budget, and a user flow coverage report. All of them run on every push. None of this is in place yet. This section will describe only what's actually running.
 
 ## What's here so far
+- [Product brief](docs/product-brief.md): the problem, who it's for, goals, non-goals and how success is measured.
 - [Roadmap and requirements](docs/requirements/roadmap.md): epics and stories with acceptance criteria.
+- [Non-functional targets](docs/nfr.md): measurable speed, size, accessibility, browser and data-safety targets, each with the check that proves it.
+- [Architecture](docs/architecture.md) and [services](docs/services.md): how it fits together, its environments, and the free-tier budget.
+- [Security and privacy](docs/security.md): the threat model, with the protection and test for each threat.
+- [Releasing](docs/releasing.md): versions, database change rules, rollback, and backups.
+- [Risks](docs/risks.md) and [how this project is run](docs/process.md).
 - [Decision log](docs/decisions.md): key decisions and why they were made.
 - [Contributing](CONTRIBUTING.md): branches, commits, pull requests, and the Definitions of Ready and Done.
 - [Changelog](CHANGELOG.md) (technical) and [release notes](RELEASE_NOTES.md) (plain language).

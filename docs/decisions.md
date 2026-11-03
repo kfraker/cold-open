@@ -2,6 +2,10 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Encrypt backups before they leave the CI runner (2026-11-03)
+**Decision:** the daily `pg_dump` is encrypted with age, using a public key kept in the repo, before it's saved as a GitHub Actions artifact. The private key stays offline with the owner.
+**Why:** artifacts on a public repo can be downloaded by any signed-in GitHub user, and the scripts are unpublished creative work. Paid backup storage isn't needed: encrypted artifacts are free and the restore can be tested.
+
 ## Spike the page layout before building the editor (2026-11-03)
 **Decision:** before the real editor is built, a short, throwaway proof of concept checks that TipTap and a prototype layout engine can paginate a 150-page script while typing stays under 50 ms.
 **Why:** a page-accurate view inside a rich-text editor is the project's biggest technical unknown. Finding out it's too slow after Epics 2–3 are built would be expensive. One or two sessions now settles it.
