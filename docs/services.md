@@ -11,6 +11,7 @@ How Cold Open connects to each external service, and what each costs. This file 
 | Vercel (Hobby) | Hosting, `dev` preview, deploy gate | 0.7 | Not yet |
 | Neon (Free) | Postgres: `main` (real), `dev` (sandbox), separate demo database | 0.8, Epic 8 | Not yet |
 | Google Cloud | OAuth client for sign-in | Epic 1 | Not yet |
+| kfraker.dev DNS | `coldopen.kfraker.dev` pointing at Vercel | 3.7 | Not yet |
 | Codecov | Coverage reports on pull requests | 0.5 | Not yet |
 | Sentry | Error alerts | before v0.1.0 | Not yet |
 | UptimeRobot | Uptime check | before v0.1.0 | Not yet |

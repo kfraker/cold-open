@@ -1,0 +1,84 @@
+# User flows
+
+Every goal a person can achieve in Cold Open, and the devices each one must be proven on. Code coverage shows which lines ran. This list shows whether each **user goal** works, on each device.
+
+*Status: planned. No tests exist yet. From story 0.5, a machine-readable copy of this list drives a flow coverage report on every CI run: browser tests name the flows they prove, the report shows each flow-by-device pair as covered or a gap, and CI fails if a covered pair loses its test. From then on, the Tests and Coverage columns are generated from that report.*
+
+**Devices:** **D** = desktop (Chromium, Firefox and WebKit). **P** = phone (Pixel 7 and iPhone 14 sizes, with touch). A flow is covered only when it passes on every listed device.
+
+## Accounts and projects (Epic 1)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F01 | Sign in with an allowed Google account and land on my projects | D, P | 1.2 | Gap |
+| F02 | Be refused sign-in with an account that isn't on the allow-list | D, P | 1.2 | Gap |
+| F03 | Sign out | D, P | 1.2 | Gap |
+| F04 | See my projects, newest first, or a welcome when there are none | D, P | 1.4 | Gap |
+| F05 | Create a project with a title and script type, and start writing | D, P | 1.5 | Gap |
+| F06 | Rename a project | D, P | 1.6 | Gap |
+| F07 | Duplicate a project | D, P | 1.6 | Gap |
+| F08 | Delete a project, then restore it from Recently deleted | D, P | 1.7 | Gap |
+| F36 | Switch theme and collapse or open the side panels, and find them as I left them | D, P | 1.1 | Gap |
+
+## Writing (Epic 2)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F09 | Write a scene using Enter and Tab (or the phone toolbar) to move between elements | D, P | 2.3, 2.9 | Gap |
+| F10 | Change the current element by shortcut, menu or phone picker | D, P | 2.4, 2.9 | Gap |
+| F11 | Pick a character, location or time of day from auto-complete | D, P | 2.5 | Gap |
+| F12 | Undo and redo changes | D, P | 2.8 | Gap |
+| F13 | See my work saved automatically, with the save status | D, P | 2.6 | Gap |
+| F14 | Keep writing with no connection, and have it sync when I'm back | D, P | 2.7 | Gap |
+| F15 | Reopen after a reload or crashed tab and find nothing lost | D, P | 2.7 | Gap |
+| F16 | Choose which copy to keep when two copies conflict | D, P | 2.7 | Gap |
+
+## Pages and PDF (Epic 3, Epic 7)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F17 | Read and write in the page view, with page numbers and (MORE)/(CONT'D) | D, P | 3.2 | Gap |
+| F18 | Export a script to PDF that matches the page view | D, P | 3.5, 7.1 | Gap |
+
+## Script types (Epic 4)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F19 | Write in TV, stage play or audio drama format | D, P | 4.1–4.4 | Gap |
+| F20 | Create a custom script type and use it in a project | D | 4.5, 4.6 | Gap |
+| F21 | Change a project's script type | D, P | 4.7 | Gap |
+
+F20 is desktop only: editing a type's margins and rules needs a wide screen. On phones, custom types can be used but not edited. That's logged in the decision log when the story is done.
+
+## Project contents (Epic 5)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F22 | Fill in the title page and see it in the PDF | D, P | 5.1 | Gap |
+| F23 | Browse characters, add notes, and rename a character across the script | D, P | 5.2 | Gap |
+| F24 | Browse locations and their scenes | D, P | 5.3 | Gap |
+| F25 | Jump to a scene from the outline, and reorder scenes | D, P | 5.4 | Gap |
+| F26 | Write project notes and scene notes | D, P | 5.5 | Gap |
+| F27 | Arrange index cards on the beat board | D, P | 5.6 | Gap |
+
+## Drafts and revisions (Epic 6)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F28 | Save a named draft | D, P | 6.2 | Gap |
+| F29 | Compare two versions | D | 6.3 | Gap |
+| F30 | Restore an earlier version | D, P | 6.4 | Gap |
+
+F29 is desktop only for v1.0.0, because a side-by-side comparison needs a wide screen. A phone layout for comparisons is a possible later story.
+
+## Import and export (Epic 7)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F31 | Import a Fountain script as a new project | D | 7.3 | Gap |
+| F32 | Import a Final Draft (.fdx) script as a new project | D | 7.5 | Gap |
+| F33 | Export to Fountain | D, P | 7.2 | Gap |
+| F34 | Export to Final Draft (.fdx) | D, P | 7.4 | Gap |
+
+Imports are desktop only for v1.0.0: script files are rarely on a phone, and phone file pickers vary by device. Phone import is a possible later story.
+
+## Demo (Epic 8)
+| ID | Flow | Devices | Story | Coverage |
+|---|---|---|---|---|
+| F35 | Try Cold Open without signing up, and see a formatted sample script in under a minute | D, P | 8.2 | Gap |
+
+## Summary
+36 flows, 68 flow-by-device pairs. Covered: 0 of 68 (0%). Every flow is a gap until its story is done.

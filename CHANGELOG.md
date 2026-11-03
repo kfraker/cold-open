@@ -17,4 +17,5 @@ The complete technical record of changes, written for developers. Plain-language
   - `releasing.md`: SemVer, expand/contract migrations, rollback, encrypted daily backups.
   - `risks.md`: 9 risks.
   - `process.md`: how the project is run.
+- Full requirements (story 0.3): Epics 1–9 in `docs/requirements/roadmap.md`, broken into 60 stories with sizes and acceptance criteria, linked to flows and threat ids. `docs/user-flows.md` lists 36 user flows (68 flow-by-device pairs, all gaps for now), with desktop-only exceptions explained.
 

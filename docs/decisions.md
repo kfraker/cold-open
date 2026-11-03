@@ -2,6 +2,10 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Live at coldopen.kfraker.dev, set up before v0.1.0 (2026-11-03)
+**Decision:** the live site's address is `coldopen.kfraker.dev`, a subdomain of the owner's portfolio site. It's set up in story 3.7, before the first release, rather than at v1.0.0.
+**Why:** a subdomain is free and ties the app to the portfolio. Setting it up before v0.1.0 means Google sign-in is registered once, on the final address, and the address shared with reviewers never changes.
+
 ## Encrypt backups before they leave the CI runner (2026-11-03)
 **Decision:** the daily `pg_dump` is encrypted with age, using a public key kept in the repo, before it's saved as a GitHub Actions artifact. The private key stays offline with the owner.
 **Why:** artifacts on a public repo can be downloaded by any signed-in GitHub user, and the scripts are unpublished creative work. Paid backup storage isn't needed: encrypted artifacts are free and the restore can be tested.

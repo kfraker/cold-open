@@ -36,6 +36,7 @@ Work is done with Claude Code as the build partner. The owner acts as product ow
 - **The process became a standard.** Everything that applies to any project became a 14-item "before any code" checklist, added to the owner's global standards. Every future project starts the same way.
 - **Story 0.1:** public repo created under the MIT license, with the README, contribution guide, decision log and Epic 0 requirements.
 - **Story 0.2:** these planning documents.
+- **Story 0.3:** 60 stories for Epics 1–9 and 36 user flows, approved. The owner confirmed `coldopen.kfraker.dev` as the address, so setting it up moved from the last epic to before the first release.
 
 ## Lessons
 - Ask about design and naming. Don't fill them in. The first draft assumed a look, and the owner caught it.

@@ -29,6 +29,7 @@ Planned: unit tests with coverage, browser tests on desktop and phone sizes in C
 ## What's here so far
 - [Product brief](docs/product-brief.md): the problem, who it's for, goals, non-goals and how success is measured.
 - [Roadmap and requirements](docs/requirements/roadmap.md): epics and stories with acceptance criteria.
+- [User flows](docs/user-flows.md): every goal a person can achieve in the app, and the devices each must be proven on.
 - [Non-functional targets](docs/nfr.md): measurable speed, size, accessibility, browser and data-safety targets, each with the check that proves it.
 - [Architecture](docs/architecture.md) and [services](docs/services.md): how it fits together, its environments, and the free-tier budget.
 - [Security and privacy](docs/security.md): the threat model, with the protection and test for each threat.
