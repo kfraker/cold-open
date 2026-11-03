@@ -1,0 +1,47 @@
+{
+  "label": "firefox",
+  "browser": "firefox",
+  "loaded": {
+    "elements": 2725,
+    "pages": 157,
+    "loadMs": 67
+  },
+  "wrapMismatches": {
+    "checked": 2725,
+    "bad": [],
+    "badCount": 0
+  },
+  "start": {
+    "keystrokes": 119,
+    "p50": 6,
+    "p95": 8,
+    "max": 11,
+    "layoutP95": 2,
+    "layoutMax": 2,
+    "slowEventCount": 0,
+    "slowEventMax": 0,
+    "pages": 158
+  },
+  "middle": {
+    "keystrokes": 119,
+    "p50": 6,
+    "p95": 7,
+    "max": 14,
+    "layoutP95": 4,
+    "layoutMax": 4,
+    "slowEventCount": 0,
+    "slowEventMax": 0,
+    "pages": 159
+  },
+  "end": {
+    "keystrokes": 119,
+    "p50": 6,
+    "p95": 7,
+    "max": 9,
+    "layoutP95": 3,
+    "layoutMax": 3,
+    "slowEventCount": 0,
+    "slowEventMax": 0,
+    "pages": 159
+  }
+}

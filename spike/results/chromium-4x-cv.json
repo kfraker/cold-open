@@ -1,0 +1,48 @@
+{
+  "label": "chromium-4x-cv",
+  "browser": "chromium",
+  "loaded": {
+    "elements": 2725,
+    "pages": 157,
+    "loadMs": 305.90000009536743
+  },
+  "wrapMismatches": {
+    "checked": 0,
+    "bad": [],
+    "badCount": 0,
+    "skipped": true
+  },
+  "start": {
+    "keystrokes": 119,
+    "p50": 40.19999980926514,
+    "p95": 131,
+    "max": 268.09999990463257,
+    "layoutP95": 7.700000286102295,
+    "layoutMax": 9.800000190734863,
+    "slowEventCount": 236,
+    "slowEventMax": 128,
+    "pages": 158
+  },
+  "middle": {
+    "keystrokes": 119,
+    "p50": 42,
+    "p95": 122.80000019073486,
+    "max": 226.59999990463257,
+    "layoutP95": 8.5,
+    "layoutMax": 13.699999809265137,
+    "slowEventCount": 236,
+    "slowEventMax": 136,
+    "pages": 159
+  },
+  "end": {
+    "keystrokes": 119,
+    "p50": 42.59999990463257,
+    "p95": 113.89999961853027,
+    "max": 178,
+    "layoutP95": 8,
+    "layoutMax": 9,
+    "slowEventCount": 236,
+    "slowEventMax": 120,
+    "pages": 159
+  }
+}

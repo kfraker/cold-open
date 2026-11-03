@@ -1,0 +1,51 @@
+/* Spike: page view on a fixed grid. 12pt Courier Prime: 1ch = 0.1in, line = 1/6in. */
+:root {
+	--line: 12pt;
+	color-scheme: dark;
+}
+body {
+	margin: 0;
+	background: #1d1f22;
+	font-family: system-ui, sans-serif;
+}
+#editor {
+	width: 8.5in;
+	margin: 24px auto;
+}
+.tiptap {
+	background: #fff;
+	color: #111;
+	box-sizing: border-box;
+	width: 8.5in;
+	padding: 1in 1in 1in 1.5in;
+	font: 12pt / var(--line) 'Courier Prime', 'Courier New', monospace;
+	outline: none;
+}
+.el {
+	margin: 0;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+.el-scene { margin-top: var(--line); text-transform: uppercase; width: 60ch; }
+.el-action { margin-top: var(--line); width: 60ch; }
+.el-character { margin-top: var(--line); margin-left: 22ch; width: 38ch; text-transform: uppercase; }
+.el-parenthetical { margin-left: 16ch; width: 25ch; }
+.el-dialogue { margin-left: 10ch; width: 35ch; }
+.el-transition { margin-top: var(--line); margin-left: 45ch; width: 15ch; text-transform: uppercase; }
+
+/* Page break: a gap between pages, with the page number. */
+.pb { display: block; user-select: none; }
+.pb-gap {
+	display: block;
+	position: relative;
+	height: calc(2in + 24px);
+	margin: 0 -1in 0 -1.5in;
+	background: linear-gradient(#fff 0 1in, #1d1f22 1in calc(1in + 24px), #fff calc(1in + 24px));
+}
+.pb-num { position: absolute; right: 1in; bottom: calc(1in - 2 * var(--line)); }
+.pb-inline { display: block; }
+.pb-more { display: block; margin-left: 12ch; }
+.pb-contd { display: block; margin-left: 12ch; text-transform: uppercase; }
+
+/* Variant: let the browser skip layout of off-screen elements. */
+.cv .el { content-visibility: auto; contain-intrinsic-block-size: auto var(--line); }
