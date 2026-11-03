@@ -1,0 +1,52 @@
+# Contributing
+
+How work gets done on Cold Open. Requirements are written down and agreed before work starts, every change goes through a pull request with passing tests, and a person approves every release to production.
+
+## Branches
+- `main` is production. It only changes through a pull request from `dev`, and those pull requests are merged by hand. *(Branch protection is set up in story 0.6.)*
+- `dev` is where work comes together. Each story can have its own short-lived branch off `dev` (`story-0.4-skeleton`), merged back by pull request.
+- Never push directly to `main`.
+
+## Commits
+[Conventional Commits](https://www.conventionalcommits.org/): `type(scope): summary`, with the story number in the body or summary.
+
+| Type | Use for |
+|---|---|
+| `feat` | A new feature users can see |
+| `fix` | A bug fix (always with a test that failed before the fix) |
+| `docs` | Documentation only |
+| `test` | Tests only |
+| `refactor` | A code change with no change in behavior |
+| `perf` | A speed or size improvement |
+| `build` / `ci` | Dependencies, tooling or the CI pipeline |
+| `chore` | Anything else |
+
+## Pull requests
+- Fill in the [template](.github/pull_request_template.md) checklist.
+- Each pull request gets an automated code review before a person is asked to review it. A security review runs before anything goes public.
+- All required checks must pass. A check that fails intermittently gets investigated until the cause is found. It is never just rerun until it passes.
+
+## Definition of Ready
+A story can start when:
+- its acceptance criteria are written in [the roadmap](docs/requirements/roadmap.md) and agreed;
+- the user flows it touches are listed in `docs/user-flows.md` *(from story 0.3)*;
+- its design is known (a mockup, or the agreed design tokens and components);
+- anything it depends on is done.
+
+## Definition of Done
+A story is done when:
+- every acceptance criterion is met and proven by an automated test, or by a named manual check where a test isn't possible;
+- browser tests pass on desktop and phone sizes, with no accessibility (axe) violations;
+- code coverage hasn't dropped, and the flows it touches are marked covered;
+- the changelog, the release notes and any affected docs are updated;
+- it has been checked on the `dev` preview.
+
+Items that depend on tooling not yet in place (from Epic 0) apply as soon as that tooling exists.
+
+## Tools and versions
+- Node.js version is pinned in `.nvmrc` and `package.json` `engines` *(story 0.4)*.
+- Formatting (Prettier), linting (ESLint) and type checks (`svelte-check`) run in pre-commit hooks and in CI *(stories 0.4–0.5)*.
+- Dependencies must use licenses compatible with MIT. CI checks this *(story 0.5)*. Only the open-source parts of TipTap are used, never paid extensions.
+
+## Secrets
+Never commit secrets or paste them into issues, pull requests or chat. Local settings live in `.env`, which Git ignores. Production secrets live only in the hosting provider's encrypted settings.
