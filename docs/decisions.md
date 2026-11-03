@@ -2,6 +2,14 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Go with TipTap and our own layout engine; update page breaks on a typing pause (2026-11-03)
+**Decision:** following [spike 0.S](spikes/0S-layout.md):
+- the editor is TipTap, with page breaks drawn as decorations from one shared layout engine;
+- breaks are recalculated about 150 ms after typing pauses, and move along with the text in between;
+- the typing target is enforced in CI in Chromium at full speed on GitHub's standard runner, and the 4×-slower result is reported but not enforced.
+**Why:** the spike measured 7–31 ms at the 95th percentile in Chromium, Firefox and WebKit, at full speed and at 2× slower, with zero wrapping mismatches across 2,725 elements. Recalculating on a pause took most of the page-break cost off each keystroke. At 4× slower, the editor itself is about 50 ms on a 157-page document. Enforcing that would mean rendering the script in sections, which is a large change for budget hardware the owner doesn't write on. The original "mid-range laptop profile" couldn't be checked in CI, so the target now names a machine CI actually runs on.
+**Rejected:** `content-visibility: auto`, measured slower. A separate page preview instead of pages in the editor: not needed, since the main approach works.
+
 ## Live at coldopen.kfraker.dev, set up before v0.1.0 (2026-11-03)
 **Decision:** the live site's address is `coldopen.kfraker.dev`, a subdomain of the owner's portfolio site. It's set up in story 3.7, before the first release, rather than at v1.0.0.
 **Why:** a subdomain is free and ties the app to the portfolio. Setting it up before v0.1.0 means Google sign-in is registered once, on the final address, and the address shared with reviewers never changes.

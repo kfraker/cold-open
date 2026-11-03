@@ -19,7 +19,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - Epics 1–9 are broken into stories with acceptance criteria.
   - `docs/user-flows.md` lists every user flow, with the planned tests and devices for each.
   - The owner has approved them.
-- **0.S Layout spike** (S–M, timeboxed, throwaway code).
+- **0.S Layout spike** (S–M, timeboxed, throwaway code). *Done: go ([write-up](../spikes/0S-layout.md)).*
   - A prototype shows TipTap plus a layout engine paginating a 150-page sample screenplay into correct pages.
   - Typing latency is measured. The result, a go or change-approach recommendation, is written up and decided by the owner.
 - **0.4 App skeleton** (S).
@@ -46,8 +46,9 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - Connection strings are entered without ever being shown.
 - **0.9 Performance budget** (S).
   - Lighthouse CI checks page weight, LCP and blocking time on mobile settings.
-  - A typing benchmark harness can measure editor latency.
-  - Both fail the build when over budget, proven with a deliberate breach.
+  - A typing benchmark, built from the spike's, measures keystroke-to-paint time on a 150-page script. In Chromium at full speed on the CI runner, it fails the build above 50 ms at the 95th percentile. The 4×-slower result is reported in the run summary, not enforced.
+  - The CI runner's results are calibrated against the spike's numbers, and recorded.
+  - Both checks fail the build when over budget, proven with a deliberate breach.
 - **0.10 Design direction** (M).
   - 2–3 clickable mockups of the dark studio, three-pane look, each in light and dark.
   - The owner picks one, which becomes design tokens and base components that pass WCAG 2.2 AA contrast in both themes.
@@ -146,6 +147,9 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - Reference scripts written for the project have expected page breaks, checked by unit tests.
 - **3.2 Page view** (M).
   - The editor shows page edges and page numbers (top right, from page 2), matching the layout engine exactly.
+  - Page breaks are recalculated about 150 ms after typing pauses, and move along with the text in between.
+  - Every break, including one that splits a speech, spans the full page width.
+  - Arrow keys, selection and copying work across page breaks. Copied text never includes (MORE), (CONT'D) or page numbers.
   - Writing in page view still meets the typing target.
   - On phone sizes the page view scales to fit, or a reflowed draft view is offered.
 - **3.3 Dual dialogue** (S).

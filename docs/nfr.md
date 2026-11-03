@@ -4,7 +4,7 @@ Measurable quality targets. Each one names how it's proven. Checks marked **CI**
 
 | Area | Target | Proven by | From story |
 |---|---|---|---|
-| Typing speed | Keystroke to screen under **50 ms at the 95th percentile** in a 150-page script, on a mid-range laptop profile | Typing benchmark in Playwright (CI); first measured in the spike | 0.S, 0.9 |
+| Typing speed | Keystroke to next paint under **50 ms at the 95th percentile** in a 150-page script, in Chromium at full speed on GitHub's standard CI runner (close to a mid-range laptop). The same benchmark with the CPU 4× slower (a budget laptop or mid-range phone) is reported, not enforced. | Typing benchmark in Playwright (CI). Spike 0.S measured 7–28 ms in all three engines on a fast desktop, 25–31 ms at 2× slower and 58–76 ms at 4× slower | 0.S, 0.9 |
 | Script size | Scripts up to **300 pages** open, edit, paginate and export | Browser test with a generated 300-page script (CI) | 3.x |
 | Page load | Largest Contentful Paint under **2.5 s** on Lighthouse mobile settings; Total Blocking Time under **200 ms** | Lighthouse CI budget (CI) | 0.9 |
 | Page weight | Editor page JavaScript under **250 KB gzipped**; other pages under **100 KB** | Lighthouse CI budget (CI) | 0.9 |

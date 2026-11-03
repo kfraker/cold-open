@@ -4,7 +4,7 @@ The biggest unknowns, and how each is handled. Technical unknowns get a timeboxe
 
 | # | Risk | Likelihood / impact | How it's handled | Status |
 |---|---|---|---|---|
-| R1 | A page-accurate view inside a rich-text editor is too slow or too complex | Medium / High | **Spike 0.S:** TipTap plus a prototype layout engine paginate a 150-page sample, with typing latency measured against the 50 ms target. If it fails, change approach before Epic 2 (for example, paginating a separate preview instead of the editing surface). | Open |
+| R1 | A page-accurate view inside a rich-text editor is too slow or too complex | Medium / High → Low / Medium | [Spike 0.S](spikes/0S-layout.md) proved the approach: under 50 ms in all three engines, and the page view matches the engine line for line. Page breaks are recalculated when typing pauses. **Known limit:** on budget hardware (4× slower), typing in a full-length script reaches about 60–75 ms, mostly the editor's own cost. The 4× result is reported in CI so it stays visible. If it becomes a problem, render the script in separate sections. | Monitored |
 | R2 | The page view and the PDF disagree on page breaks | Medium / High | One layout engine drives both. Tests compare page counts and break positions. | Designed out |
 | R3 | The FDX format isn't fully documented | Medium / Medium | Build from sample files. Check exports open in Final Draft's free trial or a free FDX reader. Log any gaps as known limitations. | Open |
 | R4 | Formatting rules differ between sources | High / Medium | Each built-in type cites one public formatting guide as its reference, recorded in its definition. | Open |

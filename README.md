@@ -35,6 +35,7 @@ Planned: unit tests with coverage, browser tests on desktop and phone sizes in C
 - [Security and privacy](docs/security.md): the threat model, with the protection and test for each threat.
 - [Releasing](docs/releasing.md): versions, database change rules, rollback, and backups.
 - [Risks](docs/risks.md) and [how this project is run](docs/process.md).
+- [Spike 0.S](docs/spikes/0S-layout.md): a throwaway prototype that proved the editor's page layout is accurate and fast enough before real code depended on it.
 - [Decision log](docs/decisions.md): key decisions and why they were made.
 - [Contributing](CONTRIBUTING.md): branches, commits, pull requests, and the Definitions of Ready and Done.
 - [Changelog](CHANGELOG.md) (technical) and [release notes](RELEASE_NOTES.md) (plain language).

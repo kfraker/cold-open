@@ -37,6 +37,12 @@ Work is done with Claude Code as the build partner. The owner acts as product ow
 - **Story 0.1:** public repo created under the MIT license, with the README, contribution guide, decision log and Epic 0 requirements.
 - **Story 0.2:** these planning documents.
 - **Story 0.3:** 60 stories for Epics 1–9 and 36 user flows, approved. The owner confirmed `coldopen.kfraker.dev` as the address, so setting it up moved from the last epic to before the first release.
+- **Spike 0.S:** a throwaway prototype proved the editor approach before any real code depended on it.
+  - Typing stayed well under target in all three browser engines, and the page view matched the layout engine line for line.
+  - The layout engine's first unit tests caught a real pagination bug.
+  - Two variants were measured and compared. One was rejected because it was slower, and one was adopted: recalculating page breaks on a typing pause.
+  - The spike also showed the typing target couldn't be checked in CI as written. It now names the CI machine.
+  - The owner chose go.
 
 ## Lessons
 - Ask about design and naming. Don't fill them in. The first draft assumed a look, and the owner caught it.
