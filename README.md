@@ -2,7 +2,7 @@
 
 A professional script-writing web app. Write feature screenplays, TV scripts, stage plays and audio dramas, and the formatting is applied for you as you type. Each script lives in its own project, with its title page, characters and locations, notes, outline, beat board and revision history. Scripts export to PDF, Final Draft (`.fdx`) and Fountain.
 
-> **Status: planning.** No app code exists yet. This project is being planned and built to a written set of standards from the first commit, and the planning itself is part of the repo. See [What's here so far](#whats-here-so-far).
+> **Status: foundation.** Planning is done, and the app skeleton exists: a placeholder page, formatting, lint and type checks, and the first tests. No features yet. This project is being planned and built to a written set of standards from the first commit, and the planning itself is part of the repo. See [What's here so far](#whats-here-so-far).
 
 ## Live link
 Not deployed yet. A demo you can try without signing up is planned (Epic 8).
@@ -11,7 +11,7 @@ Not deployed yet. A demo you can try without signing up is planned (Epic 8).
 None yet. They'll be added when there's something to show.
 
 ## How it's built
-Planned stack, all on free tiers:
+Stack, all on free tiers. SvelteKit and TypeScript are in place; the rest is planned:
 
 | Part | Choice |
 |---|---|
@@ -24,7 +24,22 @@ Planned stack, all on free tiers:
 Reasons for each choice are in the [decision log](docs/decisions.md).
 
 ## How it's tested
-Planned: unit tests with coverage, browser tests on desktop and phone sizes in Chromium, Firefox and WebKit, automated accessibility checks (WCAG 2.2 AA), a performance budget, and a user flow coverage report. All of them run on every push. None of this is in place yet. This section will describe only what's actually running.
+**Running now, on the developer's machine:**
+- a pre-commit hook that checks formatting, lint and types;
+- one unit test (Vitest);
+- one browser test (Playwright, Chromium at desktop and phone size).
+
+None of these run automatically on GitHub yet.
+
+**Planned:**
+- all of the above running on every push;
+- code coverage;
+- browser tests on desktop and phone sizes in Chromium, Firefox and WebKit;
+- automated accessibility checks (WCAG 2.2 AA);
+- a performance budget;
+- a user flow coverage report.
+
+This section only describes what's actually running.
 
 ## What's here so far
 - [Product brief](docs/product-brief.md): the problem, who it's for, goals, non-goals and how success is measured.
@@ -37,7 +52,7 @@ Planned: unit tests with coverage, browser tests on desktop and phone sizes in C
 - [Risks](docs/risks.md) and [how this project is run](docs/process.md).
 - [Spike 0.S](docs/spikes/0S-layout.md): a throwaway prototype that proved the editor's page layout is accurate and fast enough before real code depended on it.
 - [Decision log](docs/decisions.md): key decisions and why they were made.
-- [Contributing](CONTRIBUTING.md): branches, commits, pull requests, and the Definitions of Ready and Done.
+- [Contributing](CONTRIBUTING.md): how to run it locally, branches, commits, pull requests, and the Definitions of Ready and Done.
 - [Changelog](CHANGELOG.md) (technical) and [release notes](RELEASE_NOTES.md) (plain language).
 
 ## What's next
