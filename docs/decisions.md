@@ -5,13 +5,17 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 ## App skeleton tooling choices (2026-11-03)
 **Decision:** for story 0.4:
 - **Adapter:** SvelteKit's `adapter-auto`, with the Vercel adapter also installed at a pinned version. The auto adapter uses it when building on Vercel and does a plain build everywhere else.
-- **Pre-commit hooks:** Lefthook alone. It hands only the staged files to Prettier and ESLint and re-stages Prettier's fixes, so lint-staged isn't needed.
+- **Pre-commit hooks:** Lefthook alone. It hands only the staged files to Prettier and ESLint, re-stages Prettier's fixes, and hides unstaged edits while it runs (tested with a partly staged file), so lint-staged isn't needed.
+- **Release age:** `.npmrc` sets `min-release-age=14`, so every install, including `npm update` and Dependabot's lockfile updates run locally, refuses releases under two weeks old.
+- **Install scripts:** none approved. npm 11 blocks dependency install scripts unless they're approved. The only one is Lefthook's `postinstall`, and the project's own `prepare` script already installs the hooks.
 - **Markdown formatting:** Prettier formats code, config and YAML, but not Markdown.
 - **Node:** pinned to 24.18.0 in `.nvmrc`, with `engines` allowing any 24.x from that version up.
 
 **Why:**
 - The Vercel adapter creates symbolic links, which Windows refuses without Developer Mode, so a local build failed. Keeping it installed stops the auto adapter from downloading an unpinned copy at deploy time.
 - One hook tool is simpler than two and does the same job.
+- A rule in a setting can't be forgotten the way a documented `--before` flag can.
+- Install scripts are the most common way a hijacked package runs code on a developer's machine.
 - Prettier pads every table cell to the widest one. In docs like `risks.md` that makes rows hundreds of characters long, and any wording change rewrites the whole table in the diff. GitHub renders Markdown the same either way.
 - Node 24 is the current long-term support line.
 

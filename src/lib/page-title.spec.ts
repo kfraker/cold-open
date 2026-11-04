@@ -9,5 +9,6 @@ describe('pageTitle', () => {
 
 	it('puts the page name before the app name', () => {
 		expect(pageTitle('Projects')).toBe('Projects · Cold Open');
+		expect(pageTitle('  Projects ')).toBe('Projects · Cold Open');
 	});
 });

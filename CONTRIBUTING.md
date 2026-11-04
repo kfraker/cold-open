@@ -63,7 +63,8 @@ npm run dev                       # the app at http://localhost:5173
 
 ## Tools and versions
 - Node.js version is pinned in `.nvmrc` and `package.json` `engines`.
-- Dependencies are exact versions (`save-exact`), installed with `--before` set to at least two weeks ago, so a just-published hijacked release can't slip in.
+- Dependencies are exact versions (`save-exact`). `.npmrc` refuses any release less than 14 days old (`min-release-age`), so a just-published hijacked release can't slip in.
+- Dependency install scripts are blocked unless approved, and none are. npm's warning about Lefthook's `postinstall` is expected: the hooks are installed by this project's own `prepare` script.
 - Before every commit, a Lefthook hook:
   1. formats the staged files (Prettier);
   2. lints them (ESLint, with no warnings allowed);

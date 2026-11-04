@@ -11,5 +11,5 @@ pre-commit:
       glob: '*.{js,ts,svelte}'
       run: npx eslint --max-warnings 0 {staged_files}
     - name: types
-      glob: '*.{js,ts,svelte}'
+      glob: '*.{js,ts,svelte,json,html}'
       run: npm run check

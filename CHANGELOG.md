@@ -24,13 +24,14 @@ The complete technical record of changes, written for developers. Plain-language
   - Decision: go. `nfr.md` redefines the typing target as enforced on the CI runner unthrottled, with 4× reported. `risks.md` R1 is now monitored. Roadmap 0.9 and 3.2 gain acceptance criteria from the findings.
 - App skeleton (story 0.4):
   - Scaffolded with `sv@1.1.1` (minimal template, TypeScript): SvelteKit 3.1, Svelte 5.57 (runes), Vite 8.3, TypeScript 6.0 with `strict`.
-  - Node pinned: `.nvmrc` is 24.18.0 and `engines` is `>=24.18.0 <25`. `.npmrc` sets `engine-strict` and `save-exact`.
+  - Node pinned: `.nvmrc` is 24.18.0 and `engines` is `>=24.18.0 <25`. `.npmrc` sets `engine-strict`, `save-exact` and `min-release-age=14`. No dependency install scripts are approved.
   - Every dev dependency is an exact version published before 2026-10-20.
   - `adapter-auto`, with `@sveltejs/adapter-vercel@7.0.1` also installed so the deploy build uses a pinned adapter.
   - Prettier 3.9 with the Svelte plugin (Markdown excluded). ESLint 10 flat config with typescript-eslint and eslint-plugin-svelte. `svelte-check --fail-on-warnings`.
   - Lefthook 2.2 pre-commit hook, installed by `prepare`, running in order: Prettier on staged files (fixes re-staged), ESLint with `--max-warnings 0`, then `npm run check`. Tested with a formatting error, a lint error and a type error.
   - Vitest 5 with `server` (Node) and `client` (browser, for later component tests) projects. One unit test: `src/lib/page-title.spec.ts`.
-  - Playwright 1.64 runs `e2e/*.e2e.ts` against the production build. One test: `e2e/home.e2e.ts`.
+  - Playwright 1.64 runs `e2e/*.e2e.ts` against the production build on port 4173 (`--strictPort`), in `desktop` (Desktop Chrome) and `phone` (Pixel 7) projects. One test: `e2e/home.e2e.ts`.
+  - The hook's type check also runs when only JSON or HTML files are staged. The root `*.config.js` files are type-checked too.
   - Placeholder home page at `/`.
   - `npm audit`: 19 findings from three build-time advisories, accepted until 2026-11-11 (see the decision log).
 

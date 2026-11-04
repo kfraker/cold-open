@@ -27,7 +27,7 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 **Running now, on the developer's machine:**
 - a pre-commit hook that checks formatting, lint and types;
 - one unit test (Vitest);
-- one browser test (Playwright, Chromium).
+- one browser test (Playwright, Chromium at desktop and phone size).
 
 None of these run automatically on GitHub yet.
 
