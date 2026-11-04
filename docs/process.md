@@ -43,8 +43,13 @@ Work is done with Claude Code as the build partner. The owner acts as product ow
   - Two variants were measured and compared. One was rejected because it was slower, and one was adopted: recalculating page breaks on a typing pause.
   - The spike also showed the typing target couldn't be checked in CI as written. It now names the CI machine.
   - The owner chose go.
+- **Story 0.4:** the app skeleton, built fresh rather than on the spike code.
+  - Each check was shown to block a bad commit before the story was called done.
+  - Three problems were found and fixed: the Vercel adapter can't build on Windows, the hook installer didn't run under Windows' command shell, and Prettier made Markdown tables unreadable in diffs.
+  - Three advisories in build-time tools were accepted until their fixes are two weeks old.
 
 ## Lessons
 - Ask about design and naming. Don't fill them in. The first draft assumed a look, and the owner caught it.
 - A page-load budget doesn't measure what matters most in an editor. Typing latency needed its own target and test.
+- Prove each check fails before trusting that it passes. The pre-commit hook was tested with a deliberate formatting error, lint error and type error.
 - Artifacts on a public repo can be downloaded by any signed-in GitHub user, so backups must be encrypted before they're uploaded.

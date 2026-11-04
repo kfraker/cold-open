@@ -22,7 +22,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
 - **0.S Layout spike** (S–M, timeboxed, throwaway code). *Done: go ([write-up](../spikes/0S-layout.md)).*
   - A prototype shows TipTap plus a layout engine paginating a 150-page sample screenplay into correct pages.
   - Typing latency is measured. The result, a go or change-approach recommendation, is written up and decided by the owner.
-- **0.4 App skeleton** (S).
+- **0.4 App skeleton** (S). *Done.*
   - A SvelteKit + TypeScript (strict) app runs locally, with the Node version pinned.
   - Prettier, ESLint and `svelte-check` pass, and pre-commit hooks run them.
   - There is one unit test and one browser test.

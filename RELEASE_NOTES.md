@@ -7,3 +7,4 @@ What changed in each version, in plain language, one line per change. The [chang
 - Wrote the planning documents: what the app is for, quality targets, how it's built, how it stays secure, how releases and backups work, and the main risks.
 - Wrote every planned feature as stories with acceptance criteria, and listed all 36 things a person can do in the app, with the devices each must be tested on.
 - Tested the riskiest idea first with a throwaway prototype: a 157-page script shows accurate pages while typing stays fast in Chrome, Firefox and Safari's engines.
+- Set up the app's foundation: a placeholder home page, automatic formatting and code checks before every commit, and the first two automated tests.

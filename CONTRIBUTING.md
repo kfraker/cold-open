@@ -43,9 +43,34 @@ A story is done when:
 
 Items that depend on tooling not yet in place (from Epic 0) apply as soon as that tooling exists.
 
+## Getting started
+Install Node.js 24 (the exact version is in `.nvmrc`), then:
+
+```sh
+npm ci                            # exact locked versions; also installs the git hooks
+npx playwright install chromium   # browser for the browser tests
+npm run dev                       # the app at http://localhost:5173
+```
+
+| Command | What it does |
+|---|---|
+| `npm run lint` | Prettier formatting check, then ESLint |
+| `npm run format` | Fix formatting |
+| `npm run check` | Type check (`svelte-check`), failing on warnings |
+| `npm run test:unit` | Unit tests in watch mode (add `-- --run` to run once) |
+| `npm run test:e2e` | Browser tests against a production build |
+| `npm test` | All tests once |
+
 ## Tools and versions
-- Node.js version is pinned in `.nvmrc` and `package.json` `engines` *(story 0.4)*.
-- Formatting (Prettier), linting (ESLint) and type checks (`svelte-check`) run in pre-commit hooks and in CI *(stories 0.4–0.5)*.
+- Node.js version is pinned in `.nvmrc` and `package.json` `engines`.
+- Dependencies are exact versions (`save-exact`), installed with `--before` set to at least two weeks ago, so a just-published hijacked release can't slip in.
+- Before every commit, a Lefthook hook:
+  1. formats the staged files (Prettier);
+  2. lints them (ESLint, with no warnings allowed);
+  3. type-checks the project (`svelte-check`).
+
+  CI runs the same checks *(story 0.5)*, so skipping the hook doesn't skip them.
+- Prettier formats code, config and YAML, but not Markdown ([why](docs/decisions.md#app-skeleton-tooling-choices-2026-11-03)).
 - Dependencies must use licenses compatible with MIT. CI checks this *(story 0.5)*. Only the open-source parts of TipTap are used, never paid extensions.
 
 ## Secrets

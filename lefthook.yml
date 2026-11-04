@@ -1,0 +1,15 @@
+# Git hooks, installed by `npm install` (the `prepare` script).
+# The same checks run in CI, so skipping a hook locally doesn't skip them.
+pre-commit:
+  piped: true # format first, so lint and type checks see the formatted files
+  jobs:
+    - name: format
+      glob: '*.{js,ts,svelte,css,html,json,yml,yaml}'
+      run: npx prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+    - name: lint
+      glob: '*.{js,ts,svelte}'
+      run: npx eslint --max-warnings 0 {staged_files}
+    - name: types
+      glob: '*.{js,ts,svelte}'
+      run: npm run check
