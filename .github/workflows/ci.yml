@@ -66,9 +66,11 @@ jobs:
       - name: Browsers
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Browser tests with accessibility checks
+        id: e2e
         run: npx playwright test
       - name: User flow coverage (fails if a covered flow loses its test)
-        if: ${{ !cancelled() }}
+        # Runs when the tests ran, even if some failed, but not after an earlier step failed.
+        if: ${{ !cancelled() && (steps.e2e.outcome == 'success' || steps.e2e.outcome == 'failure') }}
         run: npm run flows:report
       - name: Test report
         if: ${{ failure() }}

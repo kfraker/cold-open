@@ -28,7 +28,7 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 - formatting, lint and type checks;
 - unit tests (Vitest), with a coverage floor that can't drop;
 - browser tests in Chromium, Firefox and WebKit, and at Pixel 7 and iPhone 14 sizes (Playwright);
-- every browser test also fails on a JavaScript error, a failed request, or a WCAG 2.2 AA accessibility violation (axe);
+- every browser test of the app also fails on a JavaScript error, a failed request, or a WCAG 2.2 AA accessibility violation (axe), and separate tests prove each of those checks catches its problem;
 - a [user flow coverage report](docs/user-flows.md) that names the gaps, and fails if a proven flow loses its test;
 - a dependency license check and `npm audit`.
 

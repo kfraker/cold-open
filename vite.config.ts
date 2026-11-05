@@ -24,10 +24,11 @@ export default defineConfig({
 			include: ['src/lib/**/*.{ts,svelte}'],
 			exclude: ['src/lib/**/*.{test,spec}.ts'],
 			reporter: ['text', 'json-summary', 'html'],
-			// The floor coverage can't drop below. A run that beats it raises it (rounded down), so
-			// lowering it is always a visible change to this file.
+			// The floor coverage can't drop below. A local run that beats it raises it (rounded down)
+			// by rewriting this file, so the change is committed with the work. CI never rewrites it,
+			// and lowering the floor is always a visible change here.
 			thresholds: {
-				autoUpdate: (value: number) => Math.floor(value),
+				autoUpdate: process.env.CI ? false : (value: number) => Math.floor(value),
 				lines: 100,
 				functions: 100,
 				branches: 100,

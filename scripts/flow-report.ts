@@ -3,6 +3,7 @@
 //   node scripts/flow-report.ts           report, and fail if a flow-device pair lost its test (CI)
 //   node scripts/flow-report.ts --update  also accept today's coverage as the baseline,
 //                                         and regenerate docs/user-flows.md
+//   ... --update --allow-drop             accept a baseline that drops pairs (say why in the PR)
 //
 // The flow list is e2e/flows.json. e2e/flow-reporter.ts records which tests proved which flows.
 // A flow is covered on a device only when it passes in every browser project for that device.
@@ -127,19 +128,23 @@ function doc(): string {
 	return out.join('\n') + '\n';
 }
 
-if (process.argv.includes('--update')) {
+const baseline = (JSON.parse(readFileSync(BASELINE, 'utf8')) as { covered: string[] }).covered;
+const lost = baseline.filter((pair) => !covered.includes(pair));
+const gained = covered.filter((pair) => !baseline.includes(pair));
+const updating = process.argv.includes('--update');
+if (gained.length)
+	console.log(
+		`\nNewly covered${updating ? '' : ' (accept with npm run flows:update)'}: ${gained.join(', ')}`
+	);
+if (lost.length) {
+	console.error(`\nFlow coverage dropped. No passing test proves: ${lost.join(', ')}`);
+	// Accepting a drop must be deliberate, so it can't happen by running --update after a bad run.
+	if (!(updating && process.argv.includes('--allow-drop'))) process.exit(1);
+}
+if (updating) {
 	writeFileSync(BASELINE, JSON.stringify({ covered }, null, 2) + '\n');
 	writeFileSync(DOC, doc());
 	console.log(`\nUpdated ${BASELINE} and ${DOC}.`);
 } else {
-	const baseline = (JSON.parse(readFileSync(BASELINE, 'utf8')) as { covered: string[] }).covered;
-	const lost = baseline.filter((pair) => !covered.includes(pair));
-	const gained = covered.filter((pair) => !baseline.includes(pair));
-	if (gained.length)
-		console.log(`\nNewly covered (accept with npm run flows:update): ${gained.join(', ')}`);
-	if (lost.length) {
-		console.error(`\nFlow coverage dropped. No passing test proves: ${lost.join(', ')}`);
-		process.exit(1);
-	}
 	console.log('\nFlow coverage guard passed.');
 }

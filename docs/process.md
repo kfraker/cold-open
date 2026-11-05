@@ -57,6 +57,8 @@ Work is done with Claude Code as the build partner. The owner acts as product ow
   - Svelte hydration removed an element a test had added;
   - the local server listened only on IPv6, while Firefox sometimes connected over IPv4.
 
+  The code review found nine issues, and eight were fixed. Among them: the license check could pass a package that required GPL, and Firefox and WebKit report a request cancelled by navigation as a failure. Repeating the new tests found three more bugs in the tests themselves before they were committed.
+
 ## Lessons
 - Ask about design and naming. Don't fill them in. The first draft assumed a look, and the owner caught it.
 - A page-load budget doesn't measure what matters most in an editor. Typing latency needed its own target and test.
