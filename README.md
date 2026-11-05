@@ -24,27 +24,26 @@ Stack, all on free tiers. SvelteKit and TypeScript are in place; the rest is pla
 Reasons for each choice are in the [decision log](docs/decisions.md).
 
 ## How it's tested
-**Running now, on the developer's machine:**
-- a pre-commit hook that checks formatting, lint and types;
-- one unit test (Vitest);
-- one browser test (Playwright, Chromium at desktop and phone size).
+**On every push** ([CI workflow](.github/workflows/ci.yml)), and any failure turns the run red:
+- formatting, lint and type checks;
+- unit tests (Vitest), with a coverage floor that can't drop;
+- browser tests in Chromium, Firefox and WebKit, and at Pixel 7 and iPhone 14 sizes (Playwright);
+- every browser test also fails on a JavaScript error, a failed request, or a WCAG 2.2 AA accessibility violation (axe);
+- a [user flow coverage report](docs/user-flows.md) that names the gaps, and fails if a proven flow loses its test;
+- a dependency license check and `npm audit`.
 
-None of these run automatically on GitHub yet.
+The same formatting, lint and type checks also run before every commit.
 
-**Planned:**
-- all of the above running on every push;
-- code coverage;
-- browser tests on desktop and phone sizes in Chromium, Firefox and WebKit;
-- automated accessibility checks (WCAG 2.2 AA);
-- a performance budget;
-- a user flow coverage report.
+There are no features yet, so there are only a few tests. Most of them prove the checks above actually catch problems.
+
+**Planned:** a performance budget and a typing-speed benchmark (story 0.9).
 
 This section only describes what's actually running.
 
 ## What's here so far
 - [Product brief](docs/product-brief.md): the problem, who it's for, goals, non-goals and how success is measured.
 - [Roadmap and requirements](docs/requirements/roadmap.md): epics and stories with acceptance criteria.
-- [User flows](docs/user-flows.md): every goal a person can achieve in the app, and the devices each must be proven on.
+- [User flows](docs/user-flows.md): every goal a person can achieve in the app, the devices each must be proven on, and which are covered. Generated from the tests.
 - [Non-functional targets](docs/nfr.md): measurable speed, size, accessibility, browser and data-safety targets, each with the check that proves it.
 - [Architecture](docs/architecture.md) and [services](docs/services.md): how it fits together, its environments, and the free-tier budget.
 - [Security and privacy](docs/security.md): the threat model, with the protection and test for each threat.

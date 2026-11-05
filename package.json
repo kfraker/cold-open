@@ -19,14 +19,19 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "test:unit": "vitest",
+    "test:coverage": "vitest --run --coverage",
     "test:e2e": "playwright test",
-    "test": "npm run test:unit -- --run && npm run test:e2e"
+    "flows:report": "node scripts/flow-report.ts",
+    "flows:update": "node scripts/flow-report.ts --update",
+    "licenses": "node scripts/check-licenses.ts",
+    "test": "npm run test:coverage && npm run test:e2e && npm run flows:report"
   },
   "imports": {
     "#lib": "./src/lib/index.js",
     "#lib/*": "./src/lib/*"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.64.1",
     "@sveltejs/adapter-auto": "8.0.0",
@@ -35,6 +40,7 @@
     "@sveltejs/vite-plugin-svelte": "7.3.1",
     "@types/node": "24.19.2",
     "@vitest/browser-playwright": "5.0.5",
+    "@vitest/coverage-v8": "5.0.5",
     "eslint": "10.13.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-svelte": "3.23.1",

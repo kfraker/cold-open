@@ -18,6 +18,22 @@ export default defineConfig({
 	],
 	test: {
 		expect: { requireAssertions: true },
+		coverage: {
+			provider: 'v8',
+			// Shared code is unit-tested. Pages and routes are covered by the browser tests.
+			include: ['src/lib/**/*.{ts,svelte}'],
+			exclude: ['src/lib/**/*.{test,spec}.ts'],
+			reporter: ['text', 'json-summary', 'html'],
+			// The floor coverage can't drop below. A run that beats it raises it (rounded down), so
+			// lowering it is always a visible change to this file.
+			thresholds: {
+				autoUpdate: (value: number) => Math.floor(value),
+				lines: 100,
+				functions: 100,
+				branches: 100,
+				statements: 100
+			}
+		},
 		projects: [
 			{
 				extends: true,
