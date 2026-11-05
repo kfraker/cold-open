@@ -18,6 +18,23 @@ export default defineConfig({
 	],
 	test: {
 		expect: { requireAssertions: true },
+		coverage: {
+			provider: 'v8',
+			// Shared code is unit-tested. Pages and routes are covered by the browser tests.
+			include: ['src/lib/**/*.{ts,svelte}'],
+			exclude: ['src/lib/**/*.{test,spec}.ts'],
+			reporter: ['text', 'json-summary', 'html'],
+			// The floor coverage can't drop below. A local run that beats it raises it (rounded down)
+			// by rewriting this file, so the change is committed with the work. CI never rewrites it,
+			// and lowering the floor is always a visible change here.
+			thresholds: {
+				autoUpdate: process.env.CI ? false : (value: number) => Math.floor(value),
+				lines: 100,
+				functions: 100,
+				branches: 100,
+				statements: 100
+			}
+		},
 		projects: [
 			{
 				extends: true,

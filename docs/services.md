@@ -7,12 +7,12 @@ How Cold Open connects to each external service, and what each costs. This file 
 ## Map
 | Service | Used for | Set up in | Status |
 |---|---|---|---|
-| GitHub (`kfraker/cold-open`) | Code, CI (Actions), Dependabot, secret scanning, CodeQL, Releases | 0.1, 0.5, 0.6 | Repo created 2026-11-03 |
+| GitHub (`kfraker/cold-open`) | Code, CI (Actions), Dependabot, secret scanning, CodeQL, Releases | 0.1, 0.5, 0.6 | Repo created 2026-11-03. CI (`.github/workflows/ci.yml`) runs on every push, with no secrets. |
 | Vercel (Hobby) | Hosting, `dev` preview, deploy gate | 0.7 | Not yet |
 | Neon (Free) | Postgres: `main` (real), `dev` (sandbox), separate demo database | 0.8, Epic 8 | Not yet |
 | Google Cloud | OAuth client for sign-in | Epic 1 | Not yet |
 | kfraker.dev DNS | `coldopen.kfraker.dev` pointing at Vercel | 3.7 | Not yet |
-| Codecov | Coverage reports on pull requests | 0.5 | Not yet |
+| Codecov | Coverage reports on pull requests | Optional follow-up | Not connected. Needs the owner to sign in at codecov.io. The coverage floor works without it ([why](decisions.md#ci-pipeline-design-2026-11-03)). |
 | Sentry | Error alerts | before v0.1.0 | Not yet |
 | UptimeRobot | Uptime check | before v0.1.0 | Not yet |
 

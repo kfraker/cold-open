@@ -26,7 +26,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - A SvelteKit + TypeScript (strict) app runs locally, with the Node version pinned.
   - Prettier, ESLint and `svelte-check` pass, and pre-commit hooks run them.
   - There is one unit test and one browser test.
-- **0.5 CI pipeline** (M).
+- **0.5 CI pipeline** (M). *Done.*
   - Every push runs lint, type checks, unit tests with coverage that can't drop, and browser tests in Chromium, Firefox, WebKit and two phone sizes with axe accessibility checks.
   - It also produces a flow coverage report naming the gaps, runs a dependency license check and `npm audit`.
   - Browser tests fail on any JavaScript error or failed request.

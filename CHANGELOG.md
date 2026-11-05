@@ -34,4 +34,17 @@ The complete technical record of changes, written for developers. Plain-language
   - The hook's type check also runs when only JSON or HTML files are staged. The root `*.config.js` files are type-checked too.
   - Placeholder home page at `/`.
   - `npm audit`: 19 findings from three build-time advisories, accepted until 2026-11-11 (see the decision log).
+- CI pipeline (story 0.5), `.github/workflows/ci.yml`. Runs on every push, with a read-only token and actions pinned to commit SHAs. Two jobs:
+  - **checks:** Prettier and ESLint, `svelte-check`, Vitest with v8 coverage, a dependency license check, and `npm audit --audit-level=high`.
+    - Coverage thresholds start at 100% for `src/lib`; `autoUpdate` raises them, rounded down, on local runs only. Totals go to the run summary.
+    - `scripts/check-licenses.ts` allows permissive licenses, plus MPL-2.0 for dev-only packages. It parses SPDX expressions with grouping, AND/OR precedence and `WITH` exceptions, and reads the legacy `licenses` array.
+  - **browsers:** Playwright in five projects (`chromium`, `firefox`, `webkit`, `pixel-7`, `iphone-14`) with no retries, then the flow report. The HTML report is uploaded on failure.
+  - `e2e/fixtures.ts`: every browser test fails on an uncaught JavaScript error, a console error, a failed request or an HTTP status of 400 or above. It also runs an axe scan (WCAG 2.0–2.2 A and AA tags) when the test ends. Requests the browser cancels (`net::ERR_ABORTED`, `NS_BINDING_ABORTED`, `NS_ERROR_ABORT`, WebKit `Load request cancelled`) are ignored, and so are the console's "Failed to load resource" messages, which repeat an error response or failed request already recorded. A test can list problems it expects with the `expectedProblems` option. `e2e/guards.e2e.ts` proves each of these behaviors.
+  - User flow coverage:
+    - `e2e/flows.json` holds the flow list, converted from `docs/user-flows.md`.
+    - `e2e/flow-reporter.ts` records the `@Fnn` tags on passing tests, and fails the run on an unknown flow ID.
+    - `scripts/flow-report.ts` writes the run summary, guards against losing coverage against `e2e/flow-baseline.json`, and regenerates `docs/user-flows.md` with `--update`. `--update` refuses to drop covered pairs unless `--allow-drop` is passed. CI runs it only when the browser tests ran.
+  - The Playwright web server binds to `127.0.0.1`. On Windows, `vite preview` listened only on `::1`, and Firefox sometimes tried IPv4 first and was refused (1 run in 30).
+  - The accessibility guard test adds its element outside the app root. Svelte hydration removed it under load, so the test failed in all five projects in parallel runs.
+  - New dev dependencies: `@axe-core/playwright@4.14.0`, `@vitest/coverage-v8@5.0.5`. New scripts: `test:coverage`, `flows:report`, `flows:update`, `licenses`. `npm test` now runs everything.
 

@@ -47,9 +47,21 @@ Work is done with Claude Code as the build partner. The owner acts as product ow
   - Each check was shown to block a bad commit before the story was called done.
   - Three problems were found and fixed: the Vercel adapter can't build on Windows, the hook installer didn't run under Windows' command shell, and Prettier made Markdown tables unreadable in diffs.
   - Three advisories in build-time tools were accepted until their fixes are two weeks old.
+- **Story 0.5:** the CI pipeline. Each check was first shown to catch a planted problem:
+  - a JavaScript error, a console error, an error response, a failed request and an accessibility violation;
+  - an unknown flow ID and a lost flow;
+  - a GPL-licensed package;
+  - a failing test, on a throwaway branch.
+
+  Repeating the browser suite under load found two intermittent failures, and both causes were fixed rather than retried:
+  - Svelte hydration removed an element a test had added;
+  - the local server listened only on IPv6, while Firefox sometimes connected over IPv4.
+
+  The code review found nine issues, and eight were fixed. Among them: the license check could pass a package that required GPL, and Firefox and WebKit report a request cancelled by navigation as a failure. Repeating the new tests found three more bugs in the tests themselves before they were committed.
 
 ## Lessons
 - Ask about design and naming. Don't fill them in. The first draft assumed a look, and the owner caught it.
 - A page-load budget doesn't measure what matters most in an editor. Typing latency needed its own target and test.
+- Repeat new tests many times under load before trusting them. Two timing bugs only showed up in parallel runs.
 - Prove each check fails before trusting that it passes. The pre-commit hook was tested with a deliberate formatting error, lint error and type error.
 - Artifacts on a public repo can be downloaded by any signed-in GitHub user, so backups must be encrypted before they're uploaded.

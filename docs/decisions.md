@@ -2,6 +2,22 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## CI pipeline design (2026-11-03)
+**Decision:** for story 0.5:
+- **Coverage floor:** Vitest coverage thresholds act as the floor. They start at 100% for shared code (`src/lib`). A local run that beats the floor raises it, rounded down, by rewriting `vite.config.ts`, so the higher floor is committed with the work. CI never rewrites it. Lowering it is always a visible change to that file. Pages and routes are covered by browser tests and user flows, not line coverage.
+- **Codecov not yet:** Codecov isn't connected yet. The floor enforces "coverage can't drop" without it, and the totals appear in each run's summary. Codecov would add coverage comments on pull requests, but it needs the owner to sign in at codecov.io, so it's an optional follow-up.
+- **No browser cache in CI:** Playwright's docs advise against caching browsers, since restoring takes about as long as downloading, and Actions minutes are free for public repos.
+- **Browser tests:** all five browser projects run in one job, so the flow report sees every result at once. Splitting them across jobs can come later if the run gets slow.
+- **No retries:** a test that passes only on a second try is a bug to find, not to hide.
+- **Flow coverage:** the flow list is data (`e2e/flows.json`), and tests prove flows with Playwright tags. `docs/user-flows.md` is generated from a real run. A covered flow-by-device pair that loses its test fails CI.
+- **License rule:** permissive licenses are allowed everywhere, MPL-2.0 only in development tools, and nothing else.
+- **`npm audit`:** fails on high and critical findings.
+
+**Why:**
+- Every check fails on a real problem, with no paid service and no manual step.
+- MPL-2.0 is file-level copyleft. `axe-core` uses it, and it's fine to use unchanged as a test tool, but it shouldn't be bundled into the app without a deliberate decision.
+- A moderate advisory in a build tool shouldn't block every push. A high one should.
+
 ## App skeleton tooling choices (2026-11-03)
 **Decision:** for story 0.4:
 - **Adapter:** SvelteKit's `adapter-auto`, with the Vercel adapter also installed at a pinned version. The auto adapter uses it when building on Vercel and does a plain build everywhere else.
