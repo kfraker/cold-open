@@ -2,6 +2,15 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Security scanning and branch protection (2026-11-05)
+**Decision:** for story 0.6:
+- **Dependabot version updates go to `dev`, weekly, with a 14-day cooldown.** That matches `min-release-age=14`. Minor and patch updates are grouped, so a normal week brings at most one npm pull request and one for Actions.
+- **Dependabot security update pull requests are off; alerts are on.** GitHub always opens security update pull requests against the default branch (`main`), which would skip `dev` and the preview. Instead, an alert is visible at once, `npm audit` fails CI on a high or critical finding, and the fix goes through `dev` like any other change. If a fix is needed before its release is 14 days old, that exception is logged here.
+- **CodeQL as a workflow file, not GitHub's default setup.** The file is in the repo, pins its actions to commit SHAs like the rest of CI, and uses the `security-extended` queries. It scans the TypeScript and JavaScript and the workflow files.
+- **Rulesets instead of classic branch protection.** Rulesets can block a merge on open CodeQL alerts, and their JSON is kept in `.github/rulesets/` as the record of what's set.
+- **No required approvals on `main`.** There's one maintainer, and GitHub doesn't let you approve your own pull request. The human check is that the owner merges every pull request by hand. Required checks still apply to everyone, with no bypass.
+- **Branches don't have to be up to date before merging.** Each merge of `dev` into `main` adds a merge commit that `dev` lacks, so requiring up-to-date branches would mean an extra sync before every release. CI on `dev` already tests exactly what's merged.
+
 ## CI pipeline design (2026-11-03)
 **Decision:** for story 0.5:
 - **Coverage floor:** Vitest coverage thresholds act as the floor. They start at 100% for shared code (`src/lib`). A local run that beats the floor raises it, rounded down, by rewriting `vite.config.ts`, so the higher floor is committed with the work. CI never rewrites it. Lowering it is always a visible change to that file. Pages and routes are covered by browser tests and user flows, not line coverage.

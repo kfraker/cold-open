@@ -47,4 +47,10 @@ The complete technical record of changes, written for developers. Plain-language
   - The Playwright web server binds to `127.0.0.1`. On Windows, `vite preview` listened only on `::1`, and Firefox sometimes tried IPv4 first and was refused (1 run in 30).
   - The accessibility guard test adds its element outside the app root. Svelte hydration removed it under load, so the test failed in all five projects in parallel runs.
   - New dev dependencies: `@axe-core/playwright@4.14.0`, `@vitest/coverage-v8@5.0.5`. New scripts: `test:coverage`, `flows:report`, `flows:update`, `licenses`. `npm test` now runs everything.
+- Security scanning and branch protection (story 0.6):
+  - `.github/dependabot.yml`: weekly npm and GitHub Actions version updates into `dev`, with a 14-day cooldown, minor and patch updates grouped, and Conventional Commit prefixes (`build(deps)`, `ci(deps)`).
+  - `.github/workflows/codeql.yml`: CodeQL `security-extended` for `javascript-typescript` and `actions`, `build-mode: none`, `github/codeql-action@v4.39.1` pinned by SHA. Runs on pull requests and pushes to `main` and `dev`, weekly, and by hand.
+  - Repo settings: Dependabot alerts and private vulnerability reporting turned on. Secret scanning and push protection were already on. Dependabot security update pull requests stay off (see the decision log).
+  - Rulesets, copied in `.github/rulesets/`. `main`: pull request only, merge commits only, conversations resolved, required checks (both CI jobs and both CodeQL jobs, bound to the GitHub Actions app), CodeQL merge protection (errors, and high or critical security alerts), no force push or deletion, and no bypass actors. `dev`: no force push or deletion.
+  - `SECURITY.md`: how to report a vulnerability privately.
 
