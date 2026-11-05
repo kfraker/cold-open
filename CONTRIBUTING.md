@@ -3,7 +3,9 @@
 How work gets done on Cold Open. Requirements are written down and agreed before work starts, every change goes through a pull request with passing tests, and a person approves every release to production.
 
 ## Branches
-- `main` is production. It only changes through a pull request from `dev`, and those pull requests are merged by hand. *(Branch protection is set up in story 0.6.)*
+- `main` is production. It only changes through a pull request from `dev`, and those pull requests are merged by hand. A [ruleset](.github/rulesets/README.md) enforces the pull request: CI and CodeQL must pass, a pull request whose scan finds a high or critical alert can't merge, and nobody can bypass it, admins included. That the pull request comes from `dev` and is merged by hand is a working rule.
+- `dev` also changes only through a pull request with the same checks passing, and can't be force-pushed or deleted.
+- If a fix ever has to land on `main` without going through `dev`, merge `main` back into `dev` straight after, so the next release is tested as it will be merged.
 - `dev` is where work comes together. Each story can have its own short-lived branch off `dev` (`story-0.4-skeleton`), merged back by pull request.
 - Never push directly to `main`.
 
@@ -87,5 +89,8 @@ For browser tests, install all three engines once: `npx playwright install chrom
 - Prettier formats code, config and YAML, but not Markdown ([why](docs/decisions.md#app-skeleton-tooling-choices-2026-11-03)).
 - Dependencies must use licenses compatible with MIT. CI checks this (`npm run licenses`). Only the open-source parts of TipTap are used, never paid extensions.
 
+## Dependency updates
+Dependabot opens update pull requests into `dev` every Monday, only for releases at least 14 days old. Minor and patch updates come grouped in one pull request. Review them like any other change: CI must pass, and check the changelog of anything that changes behavior.
+
 ## Secrets
-Never commit secrets or paste them into issues, pull requests or chat. Local settings live in `.env`, which Git ignores. Production secrets live only in the hosting provider's encrypted settings.
+Never commit secrets or paste them into issues, pull requests or chat. Secret scanning with push protection is on, so a push containing a recognised secret is refused. Local settings live in `.env`, which Git ignores. Production secrets live only in the hosting provider's encrypted settings.
