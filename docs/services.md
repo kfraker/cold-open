@@ -7,7 +7,7 @@ How Cold Open connects to each external service, and what each costs. This file 
 ## Map
 | Service | Used for | Set up in | Status |
 |---|---|---|---|
-| GitHub (`kfraker/cold-open`) | Code, CI (Actions), Dependabot, secret scanning, CodeQL, Releases | 0.1, 0.5, 0.6 | Repo created 2026-11-03. CI (`.github/workflows/ci.yml`) runs on every push, with no secrets. CodeQL (`.github/workflows/codeql.yml`) and Dependabot (`.github/dependabot.yml`) set up 2026-11-05. Repo settings (Settings → Code security): Dependabot alerts on, Dependabot security updates off, secret scanning and push protection on, private vulnerability reporting on. Branch rulesets (Settings → Rules → Rulesets) are copied in `.github/rulesets/`. |
+| GitHub (`kfraker/cold-open`) | Code, CI (Actions), Dependabot, secret scanning, CodeQL, Releases | 0.1, 0.5, 0.6 | Repo created 2026-11-03. CI (`.github/workflows/ci.yml`) runs on every push, with no secrets. CodeQL (`.github/workflows/codeql.yml`) and Dependabot (`.github/dependabot.yml`) set up 2026-11-05. Repo settings (Settings → Code security): Dependabot alerts on, Dependabot security updates off, secret scanning and push protection on, private vulnerability reporting on. Auto-merge off. Branch rulesets (Settings → Rules → Rulesets) are copied in `.github/rulesets/`: `Protect main` (id 26639104) and `Protect dev` (id 26639105). |
 | Vercel (Hobby) | Hosting, `dev` preview, deploy gate | 0.7 | Not yet |
 | Neon (Free) | Postgres: `main` (real), `dev` (sandbox), separate demo database | 0.8, Epic 8 | Not yet |
 | Google Cloud | OAuth client for sign-in | Epic 1 | Not yet |

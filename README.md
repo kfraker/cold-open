@@ -34,7 +34,7 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 
 The same formatting, lint and type checks also run before every commit.
 
-**Security scanning:** CodeQL scans the code and workflows on every pull request, Dependabot watches dependencies and proposes updates weekly, and secret scanning blocks a push containing a recognised secret. `main` changes only through a pull request with every check passing, with no bypass for anyone ([rules](.github/rulesets/README.md), [security policy](SECURITY.md)).
+**Security scanning:** CodeQL scans the code and workflows on every pull request, and a pull request whose scan finds a high or critical alert can't merge into `main`. Dependabot watches dependencies and proposes updates weekly, and secret scanning blocks a push containing a recognised secret. `main` and `dev` change only through a pull request with every check passing, with no bypass for anyone ([rules](.github/rulesets/README.md), [security policy](SECURITY.md)).
 
 There are no features yet, so there are only a few tests. Most of them prove the checks above actually catch problems.
 

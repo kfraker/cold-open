@@ -4,12 +4,16 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 
 ## Security scanning and branch protection (2026-11-05)
 **Decision:** for story 0.6:
-- **Dependabot version updates go to `dev`, weekly, with a 14-day cooldown.** That matches `min-release-age=14`. Minor and patch updates are grouped, so a normal week brings at most one npm pull request and one for Actions.
-- **Dependabot security update pull requests are off; alerts are on.** GitHub always opens security update pull requests against the default branch (`main`), which would skip `dev` and the preview. Instead, an alert is visible at once, `npm audit` fails CI on a high or critical finding, and the fix goes through `dev` like any other change. If a fix is needed before its release is 14 days old, that exception is logged here.
+- **Dependabot version updates go to `dev`, weekly, with a 14-day cooldown.** That matches `min-release-age=14`. They include indirect dependencies, so fixes deep in the tree (like the accepted advisories below) are proposed too. Minor and patch updates are grouped, so a normal week brings at most one npm pull request and one for Actions.
+- **Known gap: the cooldown covers the package being bumped, not everything its lockfile update brings along.** A Dependabot pull request could pull in a sub-dependency newer than 14 days, and CI's `npm ci` installs exactly what the lockfile says without checking ages. For now, Dependabot lockfile diffs are reviewed before merging. A CI check of every locked package's publish date is a possible follow-up.
+- **Dependabot security update pull requests are off; alerts are on.** GitHub always opens security update pull requests against the default branch (`main`), which would skip `dev` and the preview. Instead, an alert is visible at once, `npm audit` fails CI on a high or critical finding, and the fix goes through `dev` like any other change.
+- **If a high or critical advisory blocks CI and its fix is under 14 days old:** CI fails on every branch until it's dealt with, which is intended. Either install the fixed release early on a branch off `dev` with `npm install <package>@<version> --min-release-age=0`, or, if the advisory can't affect Cold Open, accept it for a fixed time and adjust the CI audit step until then. Either way the exception and its end date are logged here.
 - **CodeQL as a workflow file, not GitHub's default setup.** The file is in the repo, pins its actions to commit SHAs like the rest of CI, and uses the `security-extended` queries. It scans the TypeScript and JavaScript and the workflow files.
 - **Rulesets instead of classic branch protection.** Rulesets can block a merge on open CodeQL alerts, and their JSON is kept in `.github/rulesets/` as the record of what's set.
 - **No required approvals on `main`.** There's one maintainer, and GitHub doesn't let you approve your own pull request. The human check is that the owner merges every pull request by hand. Required checks still apply to everyone, with no bypass.
-- **Branches don't have to be up to date before merging.** Each merge of `dev` into `main` adds a merge commit that `dev` lacks, so requiring up-to-date branches would mean an extra sync before every release. CI on `dev` already tests exactly what's merged.
+- **Branches don't have to be up to date before merging.** Each merge of `dev` into `main` adds a merge commit that `dev` lacks, so requiring up-to-date branches would mean an extra sync before every release. As long as `main` only receives `dev`, CI on `dev` tests exactly what's merged. If a fix ever lands on `main` another way, `main` is merged back into `dev` straight after.
+- **`dev` requires pull requests and the same checks.** Story branches and Dependabot updates reach `dev` only through a pull request, so every change gets the pull request CodeQL scan and the Definition of Done checklist.
+- **Proof:** on 2026-11-05 a throwaway commit pushed straight to `main` as the repo owner was refused (`GH013: Repository rule violations`: a pull request is required, 4 of 4 required checks are expected, and code scanning results are awaited). `main` was unchanged. The rulesets report `current_user_can_bypass: never`.
 
 ## CI pipeline design (2026-11-03)
 **Decision:** for story 0.5:
@@ -51,7 +55,7 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 - None of them ships to users or handles user input. They only process glob patterns and config the project writes itself.
 - The fixed `minimatch` and `glob` releases came out on 2026-10-27 and 28. That's inside the project's rule that a release must be two weeks old before it's installed. The rule protects against hijacked releases, which are a bigger risk than these advisories.
 - `deepmerge` has no fixed release.
-- The `npm audit` step in CI (story 0.5) will fail on high and critical findings, so these moderate ones won't block it. Dependabot (story 0.6) will propose the fixes.
+- The `npm audit` step in CI (story 0.5) will fail on high and critical findings, so these moderate ones won't block it. Dependabot (story 0.6) proposes updates to indirect dependencies too, so it will propose the fixes once they're 14 days old.
 
 ## Go with TipTap and our own layout engine; update page breaks on a typing pause (2026-11-03)
 **Decision:** following [spike 0.S](spikes/0S-layout.md):

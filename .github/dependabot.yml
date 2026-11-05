@@ -1,13 +1,18 @@
 # Dependabot version updates (story 0.6). Pull requests go to `dev`, never straight to `main`, so
 # every update passes CI and the `dev` preview before release, like any other change.
-# The 14-day cooldown matches `min-release-age=14` in .npmrc: a release is only proposed once it
-# has been public for 14 days, so a hijacked release is likely to be caught and pulled first.
+# The 14-day cooldown matches `min-release-age=14` in .npmrc: a package is only proposed once its
+# new release has been public for 14 days, so a hijacked release is likely to be caught and pulled
+# first. The cooldown covers the package being bumped, not other packages its lockfile update
+# brings along; see docs/decisions.md.
 # Security alerts still appear at once; see docs/decisions.md for how they're handled.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     target-branch: dev
+    # Indirect dependencies too, so fixes for advisories deep in the tree are proposed.
+    allow:
+      - dependency-type: all
     schedule:
       interval: weekly
       day: monday

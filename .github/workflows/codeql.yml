@@ -17,12 +17,15 @@ on:
 permissions:
   contents: read
 
+# Only a pull request's superseded runs are cancelled. Push and scheduled runs all finish, so
+# `main` and `dev` keep a baseline for every commit.
 concurrency:
-  group: codeql-${{ github.ref }}
-  cancel-in-progress: true
+  group: codeql-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   analyze:
+    # Required check names in .github/rulesets/ must match this name. Rename both together.
     name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-24.04
     timeout-minutes: 20

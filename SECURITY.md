@@ -10,9 +10,9 @@ Only the latest release is supported.
 
 ## How the project is protected
 - **Dependabot** watches dependencies for known vulnerabilities and proposes updates every week.
-- **CodeQL** scans the code and the CI workflows on every pull request. A high or critical alert blocks a merge to `main`.
+- **CodeQL** scans the code and the CI workflows on every pull request. A pull request whose scan finds a high or critical alert can't merge into `main`.
 - **Secret scanning with push protection** stops a push that contains a recognised secret.
 - **CI** runs `npm audit` and a dependency license check on every push.
-- **`main` is protected:** it changes only through a pull request with every check passing, and no one can bypass that, the owner included.
+- **`main` and `dev` are protected:** they change only through a pull request with every check passing, and no one can bypass that, the owner included.
 
 The threat model, with the protection and test for each threat, is in [docs/security.md](docs/security.md).

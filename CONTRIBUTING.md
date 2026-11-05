@@ -3,8 +3,9 @@
 How work gets done on Cold Open. Requirements are written down and agreed before work starts, every change goes through a pull request with passing tests, and a person approves every release to production.
 
 ## Branches
-- `main` is production. It only changes through a pull request from `dev`, and those pull requests are merged by hand. A [ruleset](.github/rulesets/README.md) enforces this: CI and CodeQL must pass, no high or critical CodeQL alert can be open, and nobody can bypass it, admins included.
-- `dev` can't be force-pushed or deleted.
+- `main` is production. It only changes through a pull request from `dev`, and those pull requests are merged by hand. A [ruleset](.github/rulesets/README.md) enforces the pull request: CI and CodeQL must pass, a pull request whose scan finds a high or critical alert can't merge, and nobody can bypass it, admins included. That the pull request comes from `dev` and is merged by hand is a working rule.
+- `dev` also changes only through a pull request with the same checks passing, and can't be force-pushed or deleted.
+- If a fix ever has to land on `main` without going through `dev`, merge `main` back into `dev` straight after, so the next release is tested as it will be merged.
 - `dev` is where work comes together. Each story can have its own short-lived branch off `dev` (`story-0.4-skeleton`), merged back by pull request.
 - Never push directly to `main`.
 
