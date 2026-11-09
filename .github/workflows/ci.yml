@@ -31,14 +31,6 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      # TEMPORARY (story 0.7): proves Vercel holds a production deploy when CI fails on `main`.
-      # It fails on every run on `main` (push or manual), so a manual run can't turn the check
-      # green. Story branches and `dev` skip it. Removed by the pull request that records the proof.
-      - name: Deploy gate proof (temporary, fails on main only)
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: |
-          echo "::error::Deliberate failure to prove the Vercel deploy gate (story 0.7)."
-          exit 1
       - run: npm ci
       - name: Formatting and lint
         run: npm run lint
