@@ -2,7 +2,7 @@
 
 How Cold Open connects to each external service, and what each costs. This file holds no secrets. Connection strings and keys live only in the hosting provider's encrypted settings and in the local `.env`, which Git ignores.
 
-*Status: planned. Each row is filled in with real settings and dashboard paths as its story is done.*
+*Status: in progress. GitHub and Vercel are set up; the other rows are filled in with real settings and dashboard paths as their stories are done.*
 
 ## Map
 | Service | Used for | Set up in | Status |

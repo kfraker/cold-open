@@ -57,9 +57,9 @@ The complete technical record of changes, written for developers. Plain-language
   - Code review fixes: Dependabot includes indirect dependencies; `dev` also requires pull requests and the four checks; CodeQL cancels only superseded pull request runs, so push and scheduled baselines always finish; comments next to the CI and CodeQL job names point to the rulesets; docs say exactly what the rulesets enforce; the decision log records the cooldown's lockfile gap and how to handle a blocking advisory.
 - Previews and deploy gate (story 0.7):
   - `vercel.json`: Vercel installs with `npm ci`, and only `main` and `dev` deploy (`git.deploymentEnabled`).
-  - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication, with Deployment Checks on the four required checks. Settings are recorded in `docs/services.md` and confirmed when the proof is recorded.
+  - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication, with Deployment Checks on the four required checks. Settings are recorded in `docs/services.md`, confirmed 2026-11-09.
   - Temporary CI step "Deploy gate proof" that failed on every CI run on `main`, to prove the gate. On 2026-11-09 the merge of release A (`3730935`) failed CI at that step, and Vercel held the production deployment ("Checks for Deployment have failed"). The step is now removed.
-  - Addresses: production `cold-open-bay.vercel.app`, preview https://cold-open-git-dev-kfraker.vercel.app (behind Vercel Authentication).
+  - Addresses: production `cold-open-bay.vercel.app` (nothing promoted yet, so it returns 404 until release B), preview `cold-open-git-dev-kfraker.vercel.app` (behind Vercel Authentication).
   - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
 
