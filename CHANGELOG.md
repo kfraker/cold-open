@@ -64,6 +64,26 @@ The complete technical record of changes, written for developers. Plain-language
   - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
 
+- Database sandbox (story 0.8):
+  - Dependencies: `drizzle-orm@0.45.4` and `postgres@3.4.9` (postgres.js); dev: `drizzle-kit@0.31.11`.
+  - `src/lib/server/settings.ts`: checks for `APP_ENV` (`sandbox` or `production`) and `DATABASE_URL`. The sandbox may only use the `cold_open_sandbox` database and production only `cold_open`. A Vercel preview must be a sandbox and Vercel production must be production. Messages never include the connection string. Also derives the direct (unpooled) address, and hides the host and password in driver errors.
+  - `src/env.ts` declares both settings with SvelteKit 3's `defineEnvVars`, so a missing or invalid one stops the build and the app with a clear message. `src/hooks.server.ts` `init` checks they agree when the app starts. A `vite.config.ts` plugin runs the same agreement check during Vercel builds, so crossed production settings fail the build instead of being promoted.
+  - SANDBOX badge in `src/routes/+layout.svelte`, shown when `APP_ENV` is `sandbox` (placeholder styling until story 1.1).
+  - Drizzle: `drizzle.config.ts` (no database address in it), an empty `src/lib/server/db/schema.ts`, and `drizzle/meta/_journal.json`. Scripts `db:generate`, `db:check`, `db:migrate` (`scripts/db-migrate.ts`: sandbox only, uses the direct address, reports how many migrations it applied) and `db:paste-url` (`scripts/db-paste-url.ts`: saves the pooled sandbox connection string from the clipboard into `.env` without showing it, clears the clipboard, and checks the connection). `src/lib/server/env-file.ts` holds its tested helpers. `.env.example` lists the settings. `drizzle/` is excluded from Prettier, so it stays exactly as generated.
+  - CI `checks` job: a throwaway `postgres:17-alpine` service, pinned by digest. New steps check the schema and the migrations agree, then apply the migrations twice, and the second run must apply nothing.
+  - Browser tests run the app with sandbox settings (`e2e/settings.ts`), which override any local `.env`. `e2e/sandbox.e2e.ts` checks the badge, and starts the built app with missing settings, a sandbox given the production database, a preview set up as production, and production. Each server gets a free port from the system, so a test can't reach another server by mistake (a fixed port did, under `--repeat-each`). Passed 180 of 180 runs at 8 workers.
+  - `docs/security.md` threat T12 (development or testing touches real data). `docs/services.md` lists where each setting lives, plus the Neon setup. `docs/architecture.md`, `docs/releasing.md` and `CONTRIBUTING.md` cover the settings, local setup and migrations.
+  - `npm audit`: 21 findings (4 low, 17 moderate), adding esbuild GHSA-67mh-4wv8-2f99 through `drizzle-kit`. Accepted until 2026-11-11 with the others (see the decision log).
+  - Code review fixes, before the first commit:
+    - A connection string may only carry `sslmode` and `channel_binding` after `?`. postgres.js passes any other setting to the server, so `?database=cold_open` could have connected to production behind the name check.
+    - The database name is checked as written, not decoded, because that's what the driver uses.
+    - `driverUrl()` drops `channel_binding` from Neon's snippet before connecting, since postgres.js would pass it on as an unknown server parameter.
+    - `.env` values with `$`, `#`, quotes, spaces or line breaks are refused, not saved for Vite to misread.
+    - Clipboard-clearing commands no longer capture output, which could hang on Linux with xclip.
+    - `redact()` copes with a password that isn't valid percent-encoding.
+    - Playwright no longer reuses an already-running server, which could have had other settings.
+    - The startup tests also notice a server ended by a signal.
+
 ### Changed
 - Dependabot skips major versions of `@types/node` (kept on 24 to match the Node pin) and `typescript` (`svelte-check@4.7.7` doesn't support 7 yet).
 - First Dependabot updates, merged into `dev` 2026-11-09: #7 (`vite` 8.3.4 → 8.3.5, plus the lockfile's `rolldown` 1.2.15, `@rollup/pluginutils` 5.5.1, `postcss-selector-parser` 7.1.7, `svelte-eslint-parser` 1.10.0) and #10 (`@babel/parser`, `@babel/types` and `@babel/helper-string-parser` 7.29.11). Every new locked version was at least 16 days old when reviewed.
