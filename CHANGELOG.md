@@ -57,7 +57,8 @@ The complete technical record of changes, written for developers. Plain-language
   - Code review fixes: Dependabot includes indirect dependencies; `dev` also requires pull requests and the four checks; CodeQL cancels only superseded pull request runs, so push and scheduled baselines always finish; comments next to the CI and CodeQL job names point to the rulesets; docs say exactly what the rulesets enforce; the decision log records the cooldown's lockfile gap and how to handle a blocking advisory.
 - Previews and deploy gate (story 0.7):
   - `vercel.json`: Vercel installs with `npm ci`, and only `main` and `dev` deploy (`git.deploymentEnabled`).
-  - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication. Deployment Checks hold production until the four required checks pass on `main`. Settings are recorded in `docs/services.md`.
-  - Temporary CI step "Deploy gate proof" that fails only on a push to `main`, to prove the gate. Removed once the proof is recorded.
+  - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication, with Deployment Checks on the four required checks. Settings are recorded in `docs/services.md` and confirmed when the proof is recorded.
+  - Temporary CI step "Deploy gate proof" that fails on every CI run on `main`, to prove the gate. Removed once the proof is recorded.
+  - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
 
