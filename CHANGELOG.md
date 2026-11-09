@@ -59,7 +59,10 @@ The complete technical record of changes, written for developers. Plain-language
   - `vercel.json`: Vercel installs with `npm ci`, and only `main` and `dev` deploy (`git.deploymentEnabled`).
   - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication, with Deployment Checks on the four required checks. Settings are recorded in `docs/services.md`, confirmed 2026-11-09.
   - Temporary CI step "Deploy gate proof" that failed on every CI run on `main`, to prove the gate. On 2026-11-09 the merge of release A (`3730935`) failed CI at that step, and Vercel held the production deployment ("Checks for Deployment have failed"). The step is now removed.
-  - Addresses: production `cold-open-bay.vercel.app` (nothing promoted yet, so it returns 404 until release B), preview `cold-open-git-dev-kfraker.vercel.app` (behind Vercel Authentication).
+  - Release B (`eef5960`) passed all four checks and Vercel promoted it, so production went live.
+  - Addresses: production `cold-open-bay.vercel.app`, preview `cold-open-git-dev-kfraker.vercel.app` (behind Vercel Authentication).
   - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
+- Dependabot skips major versions of `@types/node` (kept on 24 to match the Node pin) and `typescript` (`svelte-check@4.7.7` doesn't support 7 yet).
+- First Dependabot updates, merged into `dev` 2026-11-09: #7 (`vite` 8.3.4 → 8.3.5, plus the lockfile's `rolldown` 1.2.15, `@rollup/pluginutils` 5.5.1, `postcss-selector-parser` 7.1.7, `svelte-eslint-parser` 1.10.0) and #10 (`@babel/parser`, `@babel/types` and `@babel/helper-string-parser` 7.29.11). Every new locked version was at least 16 days old when reviewed.
 

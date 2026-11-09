@@ -18,6 +18,14 @@ updates:
       day: monday
     cooldown:
       default-days: 14
+    # Major versions held back on purpose; see docs/decisions.md. Remove an entry when its reason ends.
+    ignore:
+      # Node is pinned to 24 (.nvmrc, engines), so its type definitions stay on 24 as well.
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
+      # svelte-check 4.7 supports TypeScript 5 and 6 only, so TypeScript 7 can't install yet.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
     groups:
       npm-minor-and-patch:
         update-types: [minor, patch]

@@ -2,6 +2,12 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Held-back major versions (2026-11-09)
+**Decision:** Dependabot skips major versions of two packages, listed in `.github/dependabot.yml`:
+- **`@types/node` stays on 24,** because Node is pinned to 24. Types for a newer Node would let code use APIs the runtime doesn't have. It moves when the Node pin moves.
+- **`typescript` stays on 6.** Dependabot's TypeScript 7 pull request (#9) failed CI at `npm ci`: `svelte-check@4.7.7` accepts TypeScript `^5.0.0 || ^6.0.0` only. It moves once `svelte-check` supports 7, checked when its releases are reviewed.
+- Minor and patch updates of both still arrive as usual.
+
 ## Previews and the deploy gate (2026-11-09)
 **Decision:** for story 0.7:
 - **Only `main` and `dev` get Vercel deployments.** `vercel.json` turns deployments off for every other branch (`"**": false`; a branch deploys if any matching rule is `true`). That matches the release path (local, then the `dev` preview, then production) and saves the free plan's build time. Story branches are tested locally and by CI.
@@ -10,7 +16,7 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 - **How the gate is proven:** because nothing failing can reach `main` by pull request, the proof used a temporary CI step that failed on every CI run on `main`. Story branches and `dev` skipped it, so the release pull request passed, and the merge into `main` failed CI on purpose. A second release, without the step, shows production going live once the checks pass. Nothing was loosened.
 - **CI runs on `main` and `dev` always finish.** A newer push only cancels a story branch's older run. Otherwise a quick second merge would cancel the first commit's checks, and the gate would hold that deploy forever.
 - **No version number or tag for setup merges into `main`.** Merges before the app is usable carry no version. The first numbered release is v0.1.0, after Epic 3.
-- **Proof (2026-11-09):** release A (pull request #5) merged `dev` into `main` as commit `3730935`. The `checks` job failed at the deliberate step, its first, so its lint, types, unit test, license and audit steps didn't run on that commit. The browser tests and both CodeQL checks passed. Vercel built the production deployment and marked it "Checks for Deployment have failed", and didn't promote it: `cold-open-bay.vercel.app` still returned 404. The step was then removed. The second half, production going live once all four checks pass, is shown by release B and recorded when it's done.
+- **Proof (2026-11-09):** release A (pull request #5) merged `dev` into `main` as commit `3730935`. The `checks` job failed at the deliberate step, its first, so its lint, types, unit test, license and audit steps didn't run on that commit. The browser tests and both CodeQL checks passed. Vercel built the production deployment and marked it "Checks for Deployment have failed", and didn't promote it: `cold-open-bay.vercel.app` still returned 404. The step was then removed. Release B (pull request #12) then merged `dev` into `main` as commit `eef5960`, without the step. All four checks passed, Vercel promoted the deployment, and `cold-open-bay.vercel.app` returned 200 with the placeholder page.
 - **The first `dev` preview was created by hand.** PR #4 merged before the Vercel project existed, so Vercel → Deployments → Create Deployment (branch `dev`) built it. It succeeded and was checked on a phone.
 - **The preview acceptance criterion is reworded** to "checked on a phone": a deliberate failure on `dev` can't be shown either, because `dev` also requires passing checks.
 

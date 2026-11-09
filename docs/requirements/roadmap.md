@@ -34,7 +34,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
 - **0.6 Security scanning and branch protection** (S). *Done.*
   - Dependabot, secret scanning with push protection, and CodeQL are on.
   - `main` accepts changes only through pull requests with the required checks passing, admins included. A direct push is tested and refused.
-- **0.7 Previews and deploy gate** (S).
+- **0.7 Previews and deploy gate** (S). *Done.*
   - Vercel builds a preview of `dev`, checked on a phone.
   - A production deploy waits for the tests to pass on `main`, proven with a deliberate failure.
   - *Status: preview checked on a phone, and a deploy held on a deliberate failure (2026-11-09). Release B, going live once the checks pass, completes the story.*
