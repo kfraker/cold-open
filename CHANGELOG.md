@@ -55,4 +55,9 @@ The complete technical record of changes, written for developers. Plain-language
   - `SECURITY.md`: how to report a vulnerability privately.
   - Proven by a manual check: a direct push to `main` as the repo owner was refused with `GH013` (pull request required, 4 of 4 checks expected, code scanning results awaited), and `main` was unchanged.
   - Code review fixes: Dependabot includes indirect dependencies; `dev` also requires pull requests and the four checks; CodeQL cancels only superseded pull request runs, so push and scheduled baselines always finish; comments next to the CI and CodeQL job names point to the rulesets; docs say exactly what the rulesets enforce; the decision log records the cooldown's lockfile gap and how to handle a blocking advisory.
+- Previews and deploy gate (story 0.7):
+  - `vercel.json`: Vercel installs with `npm ci`, and only `main` and `dev` deploy (`git.deploymentEnabled`).
+  - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication. Deployment Checks hold production until the four required checks pass on `main`. Settings are recorded in `docs/services.md`.
+  - Temporary CI step "Deploy gate proof" that fails only on a push to `main`, to prove the gate. Removed once the proof is recorded.
+  - Roadmap 0.7: the preview criterion is now "checked on a phone".
 

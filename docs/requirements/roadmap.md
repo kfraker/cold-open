@@ -35,8 +35,8 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - Dependabot, secret scanning with push protection, and CodeQL are on.
   - `main` accepts changes only through pull requests with the required checks passing, admins included. A direct push is tested and refused.
 - **0.7 Previews and deploy gate** (S).
-  - Vercel builds a preview of `dev`.
-  - A production deploy waits for the tests to pass on `main`. Both are proven with a deliberate failure.
+  - Vercel builds a preview of `dev`, checked on a phone.
+  - A production deploy waits for the tests to pass on `main`, proven with a deliberate failure.
 - **0.8 Database sandbox** (M).
   - Neon has `main` (production) and `dev` (sandbox) branches.
   - Drizzle migrations are tested in CI against a throwaway database.
