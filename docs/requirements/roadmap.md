@@ -31,7 +31,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - It also produces a flow coverage report naming the gaps, runs a dependency license check and `npm audit`.
   - Browser tests fail on any JavaScript error or failed request.
   - A deliberately failing test turns the run red.
-- **0.6 Security scanning and branch protection** (S).
+- **0.6 Security scanning and branch protection** (S). *Done.*
   - Dependabot, secret scanning with push protection, and CodeQL are on.
   - `main` accepts changes only through pull requests with the required checks passing, admins included. A direct push is tested and refused.
 - **0.7 Previews and deploy gate** (S).

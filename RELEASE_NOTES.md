@@ -9,3 +9,4 @@ What changed in each version, in plain language, one line per change. The [chang
 - Tested the riskiest idea first with a throwaway prototype: a 157-page script shows accurate pages while typing stays fast in Chrome, Firefox and Safari's engines.
 - Set up the app's foundation: a placeholder home page, automatic formatting and code checks before every commit, and the first two automated tests.
 - Every change pushed to GitHub is now tested automatically in Chrome, Firefox and Safari's engines and at two phone sizes, with accessibility, license and security checks.
+- The code is now scanned for security bugs, dependencies are watched and updated weekly, and the live version can only change through a pull request with every check passing.
