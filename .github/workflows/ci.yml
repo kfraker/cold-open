@@ -19,10 +19,29 @@ concurrency:
 jobs:
   # Both job names are required checks in .github/rulesets/. Rename the job and the ruleset
   # together, or pull requests wait forever for a check that no longer reports.
+  # This job also runs the migration tests (story 0.8), so they block a merge like everything else.
   checks:
     name: Lint, types, unit tests, licenses, audit
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    # A throwaway Postgres for the migration tests, thrown away when the job ends. No password: it
+    # only listens on the runner. The same major version as Neon. Pinned by digest like the actions
+    # (postgres:17-alpine as of 2026-11-09). Dependabot doesn't watch service images, so the digest
+    # is updated by hand.
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:3540c0362c809df084ffac0ae69fe794515f9de92692f02178bcdce0ef0302ac
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: cold_open_sandbox
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci -d cold_open_sandbox"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -36,6 +55,24 @@ jobs:
         run: npm run lint
       - name: Type check
         run: npm run check
+      - name: Migrations match the schema
+        run: |
+          npm run db:check
+          npm run db:generate
+          changes="$(git status --porcelain -- drizzle src/lib/server/db)"
+          if [ -n "$changes" ]; then
+            echo "$changes"
+            echo "::error::The schema changed without a migration. Run npm run db:generate and commit the new files in drizzle/."
+            exit 1
+          fi
+      - name: Migrations apply to a throwaway database, then a second run has nothing to do
+        env:
+          APP_ENV: sandbox
+          DATABASE_URL: postgres://ci@localhost:5432/cold_open_sandbox
+        run: |
+          npm run db:migrate
+          npm run db:migrate | tee "$RUNNER_TEMP/second-run.txt"
+          grep -q ': 0 applied now' "$RUNNER_TEMP/second-run.txt"
       - name: Browser for component tests
         run: npx playwright install --with-deps chromium
       - name: Unit tests with coverage (fails if coverage drops)

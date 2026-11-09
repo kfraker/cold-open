@@ -54,8 +54,9 @@ Characters and locations themselves are taken from the script automatically and 
 | | Local | Preview (`dev`) | Live (`main`) | Demo | CI |
 |---|---|---|---|---|---|
 | Code | Working copy | Last push to `dev` | Last merge to `main` | Same as live | The commit under test |
-| Database | Neon `dev` branch (sandbox) | Neon `dev` branch (sandbox) | Neon `main` (real data) | Separate demo database | Throwaway Postgres in the CI runner |
+| Database | Neon `dev` branch, `cold_open_sandbox` | Neon `dev` branch, `cold_open_sandbox` | Neon `main`, `cold_open` (real data) | Separate demo database | Throwaway Postgres in the CI runner |
+| `APP_ENV` | `sandbox` | `sandbox` | `production` | Its own value, decided in Epic 8 | `sandbox` |
 | Badge | SANDBOX | SANDBOX | none | DEMO banner | n/a |
 | Sign-in | Google (allow-list) | Google (allow-list) | Google (allow-list) | None ("Try it") | Test session |
 
-A preview from any branch other than `dev` has no database setting, so it fails to start rather than reaching real data.
+A preview from any branch other than `dev` has no database setting, so its build fails rather than reaching real data. `APP_ENV` must match the database name, so a sandbox given production's connection string refuses to start. Settings are listed in [services.md](services.md#settings).

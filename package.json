@@ -24,6 +24,10 @@
     "flows:report": "node scripts/flow-report.ts",
     "flows:update": "node scripts/flow-report.ts --update",
     "licenses": "node scripts/check-licenses.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:check": "drizzle-kit check",
+    "db:migrate": "node --env-file-if-exists=.env scripts/db-migrate.ts",
+    "db:paste-url": "node scripts/db-paste-url.ts",
     "test": "npm run test:coverage && npm run test:e2e && npm run flows:report"
   },
   "imports": {
@@ -41,6 +45,7 @@
     "@types/node": "24.19.2",
     "@vitest/browser-playwright": "5.0.5",
     "@vitest/coverage-v8": "5.0.5",
+    "drizzle-kit": "0.31.11",
     "eslint": "10.13.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-svelte": "3.23.1",
@@ -56,5 +61,9 @@
     "vite": "8.3.5",
     "vitest": "5.0.5",
     "vitest-browser-svelte": "3.1.0"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.4",
+    "postgres": "3.4.9"
   }
 }

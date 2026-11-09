@@ -4,9 +4,34 @@ import { playwright } from '@vitest/browser-playwright';
 // builds elsewhere. The Vercel adapter can't build on Windows: it needs symbolic links.
 import adapter from '@sveltejs/adapter-auto';
 import { sveltekit } from '@sveltejs/kit/vite';
+import type { Plugin } from 'vite';
+import { assertSettings } from './src/lib/server/settings.ts';
+
+/**
+ * On Vercel, a build whose settings disagree (say, a production deployment with APP_ENV=sandbox)
+ * fails before it can be deployed. A setting that's missing or invalid on its own already fails
+ * any build, at SvelteKit's "Analysing routes" step (checked 2026-11-09). This adds the checks that
+ * compare settings, which otherwise only run when the app starts, after Vercel could already have
+ * promoted the deployment.
+ */
+function vercelSettingsCheck(): Plugin {
+	return {
+		name: 'cold-open-vercel-settings-check',
+		apply: 'build',
+		buildStart() {
+			if (!process.env.VERCEL) return;
+			assertSettings({
+				appEnv: process.env.APP_ENV,
+				databaseUrl: process.env.DATABASE_URL,
+				vercelEnv: process.env.VERCEL_ENV
+			});
+		}
+	};
+}
 
 export default defineConfig({
 	plugins: [
+		vercelSettingsCheck(),
 		sveltekit({
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.

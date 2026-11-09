@@ -11,7 +11,7 @@ A professional script-writing web app. Write feature screenplays, TV scripts, st
 None yet. They'll be added when there's something to show.
 
 ## How it's built
-Stack, all on free tiers. SvelteKit and TypeScript are in place; the rest is planned:
+Stack, all on free tiers. SvelteKit, TypeScript, Vercel and the Neon database (with Drizzle migrations, but no tables yet) are in place; the rest is planned:
 
 | Part | Choice |
 |---|---|
@@ -30,7 +30,9 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 - browser tests in Chromium, Firefox and WebKit, and at Pixel 7 and iPhone 14 sizes (Playwright);
 - every browser test of the app also fails on a JavaScript error, a failed request, or a WCAG 2.2 AA accessibility violation (axe), and separate tests prove each of those checks catches its problem;
 - a [user flow coverage report](docs/user-flows.md) that names the gaps, and fails if a proven flow loses its test;
-- a dependency license check and `npm audit`.
+- a dependency license check and `npm audit`;
+- database migrations applied to a throwaway Postgres, with a check that the schema and the migrations agree;
+- tests that the app refuses to start with missing or crossed settings, so it can never fall back to the real database.
 
 The same formatting, lint and type checks also run before every commit.
 
@@ -39,6 +41,8 @@ The same formatting, lint and type checks also run before every commit.
 There are no features yet, so there are only a few tests. Most of them prove the checks above actually catch problems.
 
 **Planned:** a performance budget and a typing-speed benchmark (story 0.9).
+
+**Real data stays separate:** local work and the preview use a sandbox database and show a SANDBOX badge; only the live site uses the real one. A setup pointed at the wrong database refuses to start ([how](docs/decisions.md#database-sandbox-2026-11-09)).
 
 This section only describes what's actually running.
 
