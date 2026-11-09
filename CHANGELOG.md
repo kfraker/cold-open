@@ -63,6 +63,7 @@ The complete technical record of changes, written for developers. Plain-language
   - Addresses: production `cold-open-bay.vercel.app`, preview `cold-open-git-dev-kfraker.vercel.app` (behind Vercel Authentication).
   - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
+
+### Changed
 - Dependabot skips major versions of `@types/node` (kept on 24 to match the Node pin) and `typescript` (`svelte-check@4.7.7` doesn't support 7 yet).
 - First Dependabot updates, merged into `dev` 2026-11-09: #7 (`vite` 8.3.4 → 8.3.5, plus the lockfile's `rolldown` 1.2.15, `@rollup/pluginutils` 5.5.1, `postcss-selector-parser` 7.1.7, `svelte-eslint-parser` 1.10.0) and #10 (`@babel/parser`, `@babel/types` and `@babel/helper-string-parser` 7.29.11). Every new locked version was at least 16 days old when reviewed.
-

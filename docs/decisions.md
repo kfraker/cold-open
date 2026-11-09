@@ -4,8 +4,8 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 
 ## Held-back major versions (2026-11-09)
 **Decision:** Dependabot skips major versions of two packages, listed in `.github/dependabot.yml`:
-- **`@types/node` stays on 24,** because Node is pinned to 24. Types for a newer Node would let code use APIs the runtime doesn't have. It moves when the Node pin moves.
-- **`typescript` stays on 6.** Dependabot's TypeScript 7 pull request (#9) failed CI at `npm ci`: `svelte-check@4.7.7` accepts TypeScript `^5.0.0 || ^6.0.0` only. It moves once `svelte-check` supports 7, checked when its releases are reviewed.
+- **`@types/node` stays on 24,** because Node is pinned to 24. Types for a newer Node would let code use APIs the runtime doesn't have. Dependabot's 24 → 26 pull request (#8) passed CI but was closed for this reason. It moves when the Node pin moves, in the same pull request.
+- **`typescript` stays on 6.** Dependabot's TypeScript 7 pull request (#9) failed CI at `npm ci`: `svelte-check@4.7.7` accepts TypeScript `^5.0.0 || ^6.0.0` only. The ignore rule hides future TypeScript majors, so the check moves to `svelte-check`: whenever Dependabot proposes a `svelte-check` update, its `peerDependencies` are checked, and the hold ends once they accept TypeScript 7. Either way it's reviewed again by 2027-02-09.
 - Minor and patch updates of both still arrive as usual.
 
 ## Previews and the deploy gate (2026-11-09)
