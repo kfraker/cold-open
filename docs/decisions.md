@@ -10,6 +10,8 @@ Key decisions behind Cold Open and why they were made. Newest first. The decisio
 - **How the gate is proven:** because nothing failing can reach `main` by pull request, the proof uses a temporary CI step that fails on every CI run on `main`. Story branches and `dev` skip it, so the release pull request passes, and the merge into `main` fails CI on purpose. Vercel should then hold the deploy. A second release, without the step, shows production going live once the checks pass. Nothing is loosened, and nothing is live yet.
 - **CI runs on `main` and `dev` always finish.** A newer push only cancels a story branch's older run. Otherwise a quick second merge would cancel the first commit's checks, and the gate would hold that deploy forever.
 - **No version number or tag for setup merges into `main`.** Merges before the app is usable carry no version. The first numbered release is v0.1.0, after Epic 3.
+- **Proof (2026-11-09):** release A (pull request #5) merged `dev` into `main` as commit `3730935`. CI on `main` failed only at the deliberate step; the other three required checks passed. Vercel built the production deployment and marked it "Checks for Deployment have failed", and didn't promote it: `cold-open-bay.vercel.app` still returned 404. The step was then removed.
+- **The first `dev` preview was created by hand.** PR #4 merged before the Vercel project existed, so Vercel → Deployments → Create Deployment (branch `dev`) built it. It succeeded and was checked on a phone.
 - **The preview acceptance criterion is reworded** to "checked on a phone": a deliberate failure on `dev` can't be shown either, because `dev` also requires passing checks.
 
 ## Security scanning and branch protection (2026-11-05)

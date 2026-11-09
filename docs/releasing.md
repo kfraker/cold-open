@@ -10,7 +10,7 @@
 1. Work is merged into `dev` through pull requests and checked on the `dev` preview, including on a real phone.
 2. A release pull request from `dev` to `main` updates the version, the changelog and the release notes. All required checks must pass.
 3. **The owner merges it by hand.** Nobody else releases to production.
-4. (Being proven, story 0.7.) Vercel holds the production deploy until all four required checks (both CI jobs and both CodeQL jobs) pass on `main`, through Deployment Checks. If one fails, the live site stays as it was, and the fix goes through a new pull request. Merges before v0.1.0 carry no version or tag.
+4. Vercel holds the production deploy until all four required checks (both CI jobs and both CodeQL jobs) pass on `main`, through Deployment Checks. If one fails, the live site stays as it was, and the fix goes through a new pull request. Merges before v0.1.0 carry no version or tag. Proven on 2026-11-09 (see the [decision log](decisions.md#previews-and-the-deploy-gate-2026-11-09)).
 5. The tag and GitHub Release are created, and the live site is checked.
 
 ## Database changes

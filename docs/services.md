@@ -17,12 +17,12 @@ How Cold Open connects to each external service, and what each costs. This file 
 | UptimeRobot | Uptime check | before v0.1.0 | Not yet |
 
 ## Vercel
-*Being set up in story 0.7. The settings below are confirmed, with dates, by the pull request that records the deploy gate proof.*
+Set up 2026-11-09 (story 0.7).
 
 - **Project:** `cold-open` on the `kfraker` Hobby account, imported from GitHub. Framework preset SvelteKit; the build and install commands come from `package.json` and `vercel.json`. No environment variables yet (the database arrives in story 0.8).
-- **Production branch:** `main` (Settings → Environments → Production).
-- **Preview:** `dev` builds at its branch address (recorded here from the first real deployment), behind Vercel's login (Deployment Protection → Vercel Authentication, the default). Other branches don't deploy.
-- **Deploy gate:** Settings → Build and Deployment → Deployment Checks lists the four required GitHub checks. A production deployment is built but not promoted until they all pass on its commit. Force Promote on the deployment page overrides it; it's never used without the owner's say-so.
+- **Production branch:** `main` (Settings → Environments → Production). Production address: `cold-open-bay.vercel.app` (Vercel added `-bay` because `cold-open.vercel.app` was taken). `coldopen.kfraker.dev` comes in story 3.7.
+- **Preview:** `dev` builds at https://cold-open-git-dev-kfraker.vercel.app, behind Vercel's login (Deployment Protection → Vercel Authentication, the default). Other branches don't deploy.
+- **Deploy gate:** Settings → Build and Deployment → Deployment Checks lists the four required GitHub checks. They were imported from a commit SHA with **Show All Checks** on, because `main` had no checks yet. `CodeQL` (GitHub's summary check) is not selected. A production deployment is built but not promoted until they all pass on its commit. Force Promote on the deployment page overrides it; it's never used without the owner's say-so.
 - **Rollback:** Instant Rollback (see [releasing.md](releasing.md)).
 
 ## Cost budget

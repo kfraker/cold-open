@@ -58,7 +58,8 @@ The complete technical record of changes, written for developers. Plain-language
 - Previews and deploy gate (story 0.7):
   - `vercel.json`: Vercel installs with `npm ci`, and only `main` and `dev` deploy (`git.deploymentEnabled`).
   - Vercel project with `main` as production and a `dev` preview behind Vercel Authentication, with Deployment Checks on the four required checks. Settings are recorded in `docs/services.md` and confirmed when the proof is recorded.
-  - Temporary CI step "Deploy gate proof" that fails on every CI run on `main`, to prove the gate. Removed once the proof is recorded.
+  - Temporary CI step "Deploy gate proof" that failed on every CI run on `main`, to prove the gate. On 2026-11-09 the merge of release A (`3730935`) failed CI at that step, and Vercel held the production deployment ("Checks for Deployment have failed"). The step is now removed.
+  - Addresses: production `cold-open-bay.vercel.app`, preview https://cold-open-git-dev-kfraker.vercel.app (behind Vercel Authentication).
   - CI runs on `main` and `dev` are no longer cancelled by a newer push, since the deploy gate waits for each commit's checks.
   - Roadmap 0.7: the preview criterion is now "checked on a phone".
 
