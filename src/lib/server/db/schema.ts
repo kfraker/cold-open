@@ -1,6 +1,4 @@
-// The database schema, as Drizzle table definitions. Empty until Epic 1 adds the first tables.
-//
-// After changing it, run `npm run db:generate` and commit the new migration in drizzle/ with
-// the change. CI fails if this file and the migrations disagree. Migrations follow the
-// expand/contract rules in docs/releasing.md, so the previous release still works on the new schema.
-export {};
+// DELIBERATE FAILURE (story 0.8 proof, reverted next): a table with no migration. CI must go red.
+import { pgTable, serial } from 'drizzle-orm/pg-core';
+
+export const probe = pgTable('probe', { id: serial('id').primaryKey() });
