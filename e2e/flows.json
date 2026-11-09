@@ -1,0 +1,278 @@
+{
+  "devices": {
+    "desktop": ["chromium", "firefox", "webkit"],
+    "phone": ["pixel-7", "iphone-14"]
+  },
+  "groups": [
+    {
+      "name": "Accounts and projects (Epic 1)",
+      "flows": [
+        {
+          "id": "F01",
+          "name": "Sign in with an allowed Google account and land on my projects",
+          "devices": ["desktop", "phone"],
+          "stories": "1.2"
+        },
+        {
+          "id": "F02",
+          "name": "Be refused sign-in with an account that isn't on the allow-list",
+          "devices": ["desktop", "phone"],
+          "stories": "1.2"
+        },
+        {
+          "id": "F03",
+          "name": "Sign out",
+          "devices": ["desktop", "phone"],
+          "stories": "1.2"
+        },
+        {
+          "id": "F04",
+          "name": "See my projects, newest first, or a welcome when there are none",
+          "devices": ["desktop", "phone"],
+          "stories": "1.4"
+        },
+        {
+          "id": "F05",
+          "name": "Create a project with a title and script type, and start writing",
+          "devices": ["desktop", "phone"],
+          "stories": "1.5"
+        },
+        {
+          "id": "F06",
+          "name": "Rename a project",
+          "devices": ["desktop", "phone"],
+          "stories": "1.6"
+        },
+        {
+          "id": "F07",
+          "name": "Duplicate a project",
+          "devices": ["desktop", "phone"],
+          "stories": "1.6"
+        },
+        {
+          "id": "F08",
+          "name": "Delete a project, then restore it from Recently deleted",
+          "devices": ["desktop", "phone"],
+          "stories": "1.7"
+        },
+        {
+          "id": "F36",
+          "name": "Switch theme and collapse or open the side panels, and find them as I left them",
+          "devices": ["desktop", "phone"],
+          "stories": "1.1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "Writing (Epic 2)",
+      "flows": [
+        {
+          "id": "F09",
+          "name": "Write a scene using Enter and Tab (or the phone toolbar) to move between elements",
+          "devices": ["desktop", "phone"],
+          "stories": "2.3, 2.9"
+        },
+        {
+          "id": "F10",
+          "name": "Change the current element by shortcut, menu or phone picker",
+          "devices": ["desktop", "phone"],
+          "stories": "2.4, 2.9"
+        },
+        {
+          "id": "F11",
+          "name": "Pick a character, location or time of day from auto-complete",
+          "devices": ["desktop", "phone"],
+          "stories": "2.5"
+        },
+        {
+          "id": "F12",
+          "name": "Undo and redo changes",
+          "devices": ["desktop", "phone"],
+          "stories": "2.8"
+        },
+        {
+          "id": "F13",
+          "name": "See my work saved automatically, with the save status",
+          "devices": ["desktop", "phone"],
+          "stories": "2.6"
+        },
+        {
+          "id": "F14",
+          "name": "Keep writing with no connection, and have it sync when I'm back",
+          "devices": ["desktop", "phone"],
+          "stories": "2.7"
+        },
+        {
+          "id": "F15",
+          "name": "Reopen after a reload or crashed tab and find nothing lost",
+          "devices": ["desktop", "phone"],
+          "stories": "2.7"
+        },
+        {
+          "id": "F16",
+          "name": "Choose which copy to keep when two copies conflict",
+          "devices": ["desktop", "phone"],
+          "stories": "2.7"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "Pages and PDF (Epic 3, Epic 7)",
+      "flows": [
+        {
+          "id": "F17",
+          "name": "Read and write in the page view, with page numbers and (MORE)/(CONT'D)",
+          "devices": ["desktop", "phone"],
+          "stories": "3.2"
+        },
+        {
+          "id": "F18",
+          "name": "Export a script to PDF that matches the page view",
+          "devices": ["desktop", "phone"],
+          "stories": "3.5, 7.1"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "Script types (Epic 4)",
+      "flows": [
+        {
+          "id": "F19",
+          "name": "Write in TV, stage play or audio drama format",
+          "devices": ["desktop", "phone"],
+          "stories": "4.1–4.4"
+        },
+        {
+          "id": "F20",
+          "name": "Create a custom script type and use it in a project",
+          "devices": ["desktop"],
+          "stories": "4.5, 4.6"
+        },
+        {
+          "id": "F21",
+          "name": "Change a project's script type",
+          "devices": ["desktop", "phone"],
+          "stories": "4.7"
+        }
+      ],
+      "notes": [
+        "F20 is desktop only: editing a type's margins and rules needs a wide screen. On phones, custom types can be used but not edited. That's logged in the decision log when the story is done."
+      ]
+    },
+    {
+      "name": "Project contents (Epic 5)",
+      "flows": [
+        {
+          "id": "F22",
+          "name": "Fill in the title page and see it in the PDF",
+          "devices": ["desktop", "phone"],
+          "stories": "5.1"
+        },
+        {
+          "id": "F23",
+          "name": "Browse characters, add notes, and rename a character across the script",
+          "devices": ["desktop", "phone"],
+          "stories": "5.2"
+        },
+        {
+          "id": "F24",
+          "name": "Browse locations and their scenes",
+          "devices": ["desktop", "phone"],
+          "stories": "5.3"
+        },
+        {
+          "id": "F25",
+          "name": "Jump to a scene from the outline, and reorder scenes",
+          "devices": ["desktop", "phone"],
+          "stories": "5.4"
+        },
+        {
+          "id": "F26",
+          "name": "Write project notes and scene notes",
+          "devices": ["desktop", "phone"],
+          "stories": "5.5"
+        },
+        {
+          "id": "F27",
+          "name": "Arrange index cards on the beat board",
+          "devices": ["desktop", "phone"],
+          "stories": "5.6"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "Drafts and revisions (Epic 6)",
+      "flows": [
+        {
+          "id": "F28",
+          "name": "Save a named draft",
+          "devices": ["desktop", "phone"],
+          "stories": "6.2"
+        },
+        {
+          "id": "F29",
+          "name": "Compare two versions",
+          "devices": ["desktop"],
+          "stories": "6.3"
+        },
+        {
+          "id": "F30",
+          "name": "Restore an earlier version",
+          "devices": ["desktop", "phone"],
+          "stories": "6.4"
+        }
+      ],
+      "notes": [
+        "F29 is desktop only for v1.0.0, because a side-by-side comparison needs a wide screen. A phone layout for comparisons is a possible later story."
+      ]
+    },
+    {
+      "name": "Import and export (Epic 7)",
+      "flows": [
+        {
+          "id": "F31",
+          "name": "Import a Fountain script as a new project",
+          "devices": ["desktop"],
+          "stories": "7.3"
+        },
+        {
+          "id": "F32",
+          "name": "Import a Final Draft (.fdx) script as a new project",
+          "devices": ["desktop"],
+          "stories": "7.5"
+        },
+        {
+          "id": "F33",
+          "name": "Export to Fountain",
+          "devices": ["desktop", "phone"],
+          "stories": "7.2"
+        },
+        {
+          "id": "F34",
+          "name": "Export to Final Draft (.fdx)",
+          "devices": ["desktop", "phone"],
+          "stories": "7.4"
+        }
+      ],
+      "notes": [
+        "Imports are desktop only for v1.0.0: script files are rarely on a phone, and phone file pickers vary by device. Phone import is a possible later story."
+      ]
+    },
+    {
+      "name": "Demo (Epic 8)",
+      "flows": [
+        {
+          "id": "F35",
+          "name": "Try Cold Open without signing up, and see a formatted sample script in under a minute",
+          "devices": ["desktop", "phone"],
+          "stories": "8.2"
+        }
+      ],
+      "notes": []
+    }
+  ]
+}

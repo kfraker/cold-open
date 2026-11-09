@@ -4,6 +4,8 @@ node_modules/
 /build/
 /dist/
 .vercel/
+.output/
+vite.config.*.timestamp-*
 
 # Local settings and secrets
 .env

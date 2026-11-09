@@ -1,0 +1,50 @@
+# CodeQL code scanning (story 0.6). Looks for security bugs in the TypeScript and JavaScript and in
+# these workflow files. Results appear under the repo's Security tab, and the `main` ruleset blocks
+# a merge while a high or critical alert is open.
+# Runs on pull requests (story branches into `dev`, `dev` into `main`), on pushes to `dev` and
+# `main` so each has its own baseline, and once a week to pick up new CodeQL queries.
+name: CodeQL
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '23 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Only a pull request's superseded runs are cancelled. Push and scheduled runs all finish, so
+# `main` and `dev` keep a baseline for every commit.
+concurrency:
+  group: codeql-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  analyze:
+    # Required check names in .github/rulesets/ must match this name. Rename both together.
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, actions]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          queries: security-extended
+      - uses: github/codeql-action/analyze@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          category: /language:${{ matrix.language }}

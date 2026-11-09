@@ -1,0 +1,19 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+
+# Generated
+/.svelte-kit/
+/build/
+/coverage/
+/test-results/
+/playwright-report/
+
+# Prose: GitHub renders it the same either way, and padded tables make every edit a whole-table diff.
+*.md
