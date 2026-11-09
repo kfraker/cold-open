@@ -2,6 +2,16 @@
 
 Key decisions behind Cold Open and why they were made. Newest first. The decisions from initial planning (2026-11-03) were made before any code was written.
 
+## Previews and the deploy gate (2026-11-09)
+**Decision:** for story 0.7:
+- **Only `main` and `dev` get Vercel deployments.** `vercel.json` turns deployments off for every other branch (`"**": false`; a branch deploys if any matching rule is `true`). That matches the release path (local, then the `dev` preview, then production) and saves the free plan's build time. Story branches are tested locally and by CI.
+- **Vercel installs with `npm ci`,** exactly as CI does, so a deployment uses the locked versions and fails if the lockfile is out of step.
+- **Deployment Checks hold production until all four required checks pass on `main`.** The rulesets already stop failing code reaching `main`, so the gate is a second net: it catches a failure after the merge, such as a merged result that behaves differently or an intermittent test.
+- **How the gate is proven:** because nothing failing can reach `main` by pull request, the proof uses a temporary CI step that fails on every CI run on `main`. Story branches and `dev` skip it, so the release pull request passes, and the merge into `main` fails CI on purpose. Vercel should then hold the deploy. A second release, without the step, shows production going live once the checks pass. Nothing is loosened, and nothing is live yet.
+- **CI runs on `main` and `dev` always finish.** A newer push only cancels a story branch's older run. Otherwise a quick second merge would cancel the first commit's checks, and the gate would hold that deploy forever.
+- **No version number or tag for setup merges into `main`.** Merges before the app is usable carry no version. The first numbered release is v0.1.0, after Epic 3.
+- **The preview acceptance criterion is reworded** to "checked on a phone": a deliberate failure on `dev` can't be shown either, because `dev` also requires passing checks.
+
 ## Security scanning and branch protection (2026-11-05)
 **Decision:** for story 0.6:
 - **Dependabot version updates go to `dev`, weekly, with a 14-day cooldown.** That matches `min-release-age=14`. They include indirect dependencies, so fixes deep in the tree (like the accepted advisories below) are proposed too. Minor and patch updates are grouped, so a normal week brings at most one npm pull request and one for Actions.
