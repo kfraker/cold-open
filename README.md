@@ -5,7 +5,7 @@ A professional script-writing web app. Write feature screenplays, TV scripts, st
 > **Status: foundation.** Planning is done, and the app skeleton exists: a placeholder page, formatting, lint and type checks, and the first tests. No features yet. This project is being planned and built to a written set of standards from the first commit, and the planning itself is part of the repo. See [What's here so far](#whats-here-so-far).
 
 ## Live link
-Not deployed yet. A demo you can try without signing up is planned (Epic 8).
+[cold-open-bay.vercel.app](https://cold-open-bay.vercel.app) is live, showing a placeholder page for now. A demo you can try without signing up is planned (Epic 8), and the planned address is `coldopen.kfraker.dev`.
 
 ## Screenshots
 None yet. They'll be added when there's something to show.

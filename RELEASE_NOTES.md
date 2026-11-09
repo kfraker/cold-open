@@ -11,3 +11,6 @@ What changed in each version, in plain language, one line per change. The [chang
 - Every change pushed to GitHub is now tested automatically in Chrome, Firefox and Safari's engines and at two phone sizes, with accessibility, license and security checks.
 - The code is now scanned for security bugs, dependencies are watched and updated weekly, and the live version can only change through a pull request with every check passing.
 - Every change merged into the development branch gets a private preview site, and an update to the live site is held back if any test fails.
+- The live site is up, showing a placeholder page.
+- Automatic dependency updates now skip two major upgrades the project isn't ready for, with the reasons recorded.
+- The first automatic dependency updates (small fixes to the build tools) are in.
