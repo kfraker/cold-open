@@ -8,7 +8,7 @@
 // clipboard, and checks the database answers. Nothing it prints includes the connection string,
 // host or password. Works on Windows and macOS, and on Linux with wl-clipboard or xclip.
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import postgres from 'postgres';
 import { extractDatabaseUrl, setEnvValues } from '#lib/server/env-file.ts';
 import { DATABASE_NAMES, driverUrl, parseDatabaseUrl, redact } from '#lib/server/settings.ts';
@@ -100,7 +100,13 @@ if (!pooled) {
 	);
 }
 
-const before = existsSync(ENV_FILE) ? readFileSync(ENV_FILE, 'utf8') : '';
+// One read, with a missing file treated as empty, so nothing can change between a check and the read.
+let before = '';
+try {
+	before = readFileSync(ENV_FILE, 'utf8');
+} catch (error) {
+	if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+}
 let after: string;
 try {
 	after = setEnvValues(before, { APP_ENV: 'sandbox', DATABASE_URL: databaseUrl });
@@ -109,7 +115,8 @@ try {
 		`${(error as Error).message} Reset the database password in Neon and copy it again. Nothing was saved.`
 	);
 }
-writeFileSync(ENV_FILE, after);
+// A new .env is readable only by its owner (on macOS and Linux; Windows ignores the mode).
+writeFileSync(ENV_FILE, after, { mode: 0o600 });
 console.log(
 	`Saved to .env: APP_ENV=sandbox, and DATABASE_URL for ${database} (pooled). The clipboard was cleared.`
 );

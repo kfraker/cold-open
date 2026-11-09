@@ -83,6 +83,8 @@ The complete technical record of changes, written for developers. Plain-language
     - `redact()` copes with a password that isn't valid percent-encoding.
     - Playwright no longer reuses an already-running server, which could have had other settings.
     - The startup tests also notice a server ended by a signal.
+  - CodeQL fix (`js/file-system-race`): `db:paste-url` reads `.env` once, treating a missing file as empty, rather than checking it exists and then reading it. A new `.env` is created readable only by its owner (on macOS and Linux).
+  - Migration tests proven on pull request #15: a schema change without a migration, and a migration that can't apply, each turned CI red at the intended step, then were reverted.
 
 ### Changed
 - Dependabot skips major versions of `@types/node` (kept on 24 to match the Node pin) and `typescript` (`svelte-check@4.7.7` doesn't support 7 yet).
