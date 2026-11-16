@@ -34,7 +34,7 @@ The app needs two settings everywhere, with no defaults. A missing or wrong one 
 | `DATABASE_URL` | Neon `dev` → `cold_open_sandbox`, pooled | Neon `dev` → `cold_open_sandbox`, pooled | Neon `main` → `cold_open`, pooled | Browser tests: a local placeholder that nothing connects to yet. Migration tests: the job's throwaway Postgres. |
 | Where it's set | `npm run db:paste-url` | Vercel → Settings → Environment Variables, Preview, branch `dev` only | Vercel → Settings → Environment Variables, Production only | `playwright.config.ts` (`e2e/settings.ts`) and `.github/workflows/ci.yml` |
 
-- On Vercel, both `DATABASE_URL` values are **Sensitive**: they can't be read back after saving. They're pasted from Neon's Copy snippet straight into Vercel, never through chat or a file.
+- On Vercel, both `DATABASE_URL` values are type **Secret**: they can't be read back after saving. `APP_ENV` is type **Config**, which stays readable. In Vercel's Environments picker, choosing `dev` means Preview deployments of the `dev` branch only. The `DATABASE_URL` values are pasted from Neon's Copy snippet straight into Vercel, never through chat or a file. Choose **Secret** before pasting, and never screenshot the add-variable form, because it shows the value until the type is Secret.
 - A setting change on Vercel takes effect on the next deployment: Deployments → the deployment's **⋯** → Redeploy.
 - `VERCEL_ENV` is set by Vercel itself. The app uses it to check that a preview is a sandbox and production is production.
 - The address Neon shows for a pooled connection has `-pooler` in its host. Migrations use the same address without it.
@@ -42,7 +42,7 @@ The app needs two settings everywhere, with no defaults. A missing or wrong one 
 ## Neon
 Set up 2026-11-15 (story 0.8).
 
-- **Project:** `cold-open`, ID `spring-grass-34506…` *(full ID to be added)*, Free plan, AWS US East 1 (N. Virginia), Postgres 18.
+- **Project:** `cold-open`, ID `spring-grass-34506834`, Free plan, AWS US East 1 (N. Virginia), Postgres 18.
 - **Created through Vercel's Neon integration** (Vercel → Storage → Create Database → Neon), because Neon accounts made through Vercel can't create projects directly. Sign in to Neon with Vercel's **Open in Neon** button. Auth and Realtime were left off.
 - **Not connected to the Vercel project, on purpose.** "Connect Project" was skipped: it would add a `DATABASE_URL` for Neon's default database to Production and Preview, so previews would get a database nobody chose. The two `DATABASE_URL` values are added by hand instead (above).
 - **Branches:** `main` (default; production) and `dev` (sandbox, a child of `main`, auto-delete **Never**). `dev` was created before any database, so it didn't copy `cold_open`.
