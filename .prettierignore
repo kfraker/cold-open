@@ -17,3 +17,6 @@ bun.lockb
 
 # Prose: GitHub renders it the same either way, and padded tables make every edit a whole-table diff.
 *.md
+
+# Written by drizzle-kit (npm run db:generate). Kept exactly as generated.
+/drizzle/

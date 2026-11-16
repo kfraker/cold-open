@@ -25,6 +25,7 @@
 | T9 | A compromised or vulnerable dependency | Lockfile committed; Dependabot updates aimed at `dev`; `npm audit` and a license check in CI; CodeQL. | CI |
 | T10 | Backups expose scripts | Backups are encrypted before they leave the CI runner. Nothing unencrypted is uploaded, because artifacts on a public repo can be downloaded by any signed-in GitHub user. | Backup job test: the uploaded file can't be read without the key (CI) |
 | T11 | A bad release damages data | Database changes use expand/contract and only move forward. A Neon snapshot is taken before each production migration. | See [releasing.md](releasing.md); migration tests (CI) |
+| T12 | Development or testing touches real data | Each environment has its own database: `cold_open_sandbox` on Neon's `dev` branch, `cold_open` on `main`, and a throwaway Postgres in CI. `APP_ENV` must match the database name, a Vercel preview must be a sandbox, and missing settings have no fallback, so a wrong setup refuses to start or fails its build. Everything except the live site shows a SANDBOX badge. Migration and local scripts refuse anything but the sandbox. | Unit tests of every settings check; browser tests that start the app with missing and crossed settings, and check the badge (CI) |
 
 ## Reviews
 - Each pull request gets an automated code review before the owner reviews it.

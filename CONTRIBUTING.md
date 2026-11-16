@@ -51,8 +51,11 @@ Install Node.js 24 (the exact version is in `.nvmrc`), then:
 ```sh
 npm ci                            # exact locked versions; also installs the git hooks
 npx playwright install chromium   # browser for the browser tests
+npm run db:paste-url              # once: connect to the sandbox database (below)
 npm run dev                       # the app at http://localhost:5173
 ```
+
+**Connecting to the sandbox.** The app needs `APP_ENV` and `DATABASE_URL`, and won't start without them. Locally they're in `.env`, which Git ignores. To set them without the connection string ever appearing on screen: in Neon, open the `dev` branch → **Connect**, choose the `cold_open_sandbox` database with connection pooling on, click **Copy snippet**, then run `npm run db:paste-url`. It refuses the production database, clears the clipboard, and checks the connection. Local work only ever uses the sandbox. The unit and browser tests don't need it: they use their own settings.
 
 | Command | What it does |
 |---|---|
@@ -65,9 +68,18 @@ npm run dev                       # the app at http://localhost:5173
 | `npm run flows:report` | User flow coverage after a full browser run (fails if a covered flow lost its test) |
 | `npm run flows:update` | Accept new flow coverage, and regenerate `docs/user-flows.md`. Refuses if coverage dropped, unless you add `-- --allow-drop` and say why in the PR |
 | `npm run licenses` | Dependency license check |
+| `npm run db:paste-url` | Save the sandbox connection string from the clipboard into `.env`, without showing it |
+| `npm run db:generate` | Write a migration in `drizzle/` for a change to `src/lib/server/db/schema.ts` |
+| `npm run db:check` | Check the migration files are consistent |
+| `npm run db:migrate` | Apply new migrations to the sandbox (refuses any other database) |
 | `npm test` | Unit tests with coverage, browser tests and the flow report |
 
 For browser tests, install all three engines once: `npx playwright install chromium firefox webkit`.
+
+## Database changes
+- Change `src/lib/server/db/schema.ts`, run `npm run db:generate`, and commit the new files in `drizzle/` in the same commit. CI fails if the schema and the migrations disagree.
+- Follow expand/contract ([releasing.md](docs/releasing.md#database-changes)): the previous release must still work on the new schema. Never edit a migration that's been merged; fix it with a new one.
+- Apply it to the sandbox with `npm run db:migrate`. CI also applies every migration to a throwaway database on every push.
 
 ## Writing tests
 - Import `test` and `expect` from `e2e/fixtures.ts`, not from `@playwright/test`. A test then fails on any JavaScript error, console error, failed request or error response, and on any WCAG 2.2 AA violation when it ends. Requests the browser cancels, for example by navigating away, don't count.
