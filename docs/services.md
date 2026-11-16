@@ -40,10 +40,12 @@ The app needs two settings everywhere, with no defaults. A missing or wrong one 
 - The address Neon shows for a pooled connection has `-pooler` in its host. Migrations use the same address without it.
 
 ## Neon
-Set up 2026-11-09 (story 0.8). *(Project details are filled in once the owner has created it.)*
+Set up 2026-11-15 (story 0.8).
 
-- **Project:** `cold-open`, Free plan.
-- **Branches:** `main` (default; production) and `dev` (sandbox, a child of `main`).
+- **Project:** `cold-open`, ID `spring-grass-34506…` *(full ID to be added)*, Free plan, AWS US East 1 (N. Virginia), Postgres 18.
+- **Created through Vercel's Neon integration** (Vercel → Storage → Create Database → Neon), because Neon accounts made through Vercel can't create projects directly. Sign in to Neon with Vercel's **Open in Neon** button. Auth and Realtime were left off.
+- **Not connected to the Vercel project, on purpose.** "Connect Project" was skipped: it would add a `DATABASE_URL` for Neon's default database to Production and Preview, so previews would get a database nobody chose. The two `DATABASE_URL` values are added by hand instead (above).
+- **Branches:** `main` (default; production) and `dev` (sandbox, a child of `main`, auto-delete **Never**). `dev` was created before any database, so it didn't copy `cold_open`.
 - **Databases:** `cold_open` exists only on `main`; `cold_open_sandbox` only on `dev`. Neon's default `neondb` is left alone and unused; the app refuses it.
 - **To get a connection string:** the branch → **Connect** → choose the database, keep connection pooling on → **Copy snippet**. Check the database name before pasting anywhere.
 - **Resetting the sandbox** (`dev` → Reset from parent) replaces it with a copy of `main`, which doesn't have `cold_open_sandbox`. The sandbox then refuses to start until `cold_open_sandbox` is created again on `dev` and `npm run db:migrate` is rerun. Don't reset it once `main` holds real data, because the reset copies that data into the sandbox.
@@ -55,7 +57,7 @@ Every service is on a free plan. The limits below are what's published as of 202
 |---|---|---|---|
 | GitHub Actions | Unlimited minutes for public repos | Every push, plus at most one scheduled job a day | n/a |
 | Vercel Hobby | Non-commercial use only; about 100 GB bandwidth a month | Personal use plus occasional reviewers | Far below the limit; Cold Open stays non-commercial |
-| Neon Free | About 0.5 GB storage per project; limited monthly compute; short point-in-time restore window | Text scripts are small (about 100–300 KB each); revisions are the main growth | Revisions are compressed and thinned out over time; usage is noted here each release; old automatic snapshots are pruned first |
+| Neon Free | 1 GB storage per project; 100 CU-hours of compute per project a month (as shown when the project was created, 2026-11-15); short point-in-time restore window | Text scripts are small (about 100–300 KB each); revisions are the main growth | Revisions are compressed and thinned out over time; usage is noted here each release; old automatic snapshots are pruned first |
 | Sentry Developer | About 5,000 errors a month | Very low | Alert rules limit noise; script text is never sent |
 | UptimeRobot Free | 50 monitors, checking every 5 minutes | 1–2 monitors | n/a |
 | Codecov | Free for public repos | Every pull request | n/a |

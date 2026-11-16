@@ -26,11 +26,12 @@ jobs:
     timeout-minutes: 15
     # A throwaway Postgres for the migration tests, thrown away when the job ends. No password: it
     # only listens on the runner. The same major version as Neon. Pinned by digest like the actions
-    # (postgres:17-alpine as of 2026-11-09). Dependabot doesn't watch service images, so the digest
+    # (postgres:18.4-alpine, chosen 2026-11-15 as the newest image at least 14 days old, like npm
+    # packages; Neon runs Postgres 18). Dependabot doesn't watch service images, so the digest
     # is updated by hand.
     services:
       postgres:
-        image: postgres:17-alpine@sha256:3540c0362c809df084ffac0ae69fe794515f9de92692f02178bcdce0ef0302ac
+        image: postgres:18.4-alpine@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
         env:
           POSTGRES_USER: ci
           POSTGRES_HOST_AUTH_METHOD: trust
