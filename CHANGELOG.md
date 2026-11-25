@@ -84,7 +84,7 @@ The complete technical record of changes, written for developers. Plain-language
     - Playwright no longer reuses an already-running server, which could have had other settings.
     - The startup tests also notice a server ended by a signal.
   - CodeQL fix (`js/file-system-race`): `db:paste-url` reads `.env` once, treating a missing file as empty, rather than checking it exists and then reading it. A new `.env` is created readable only by its owner (on macOS and Linux).
-  - Set up on the real services: Neon project `spring-grass-34506834` with `main` and `dev` branches; Vercel settings for the `dev` preview and Production's `APP_ENV`. Proofs recorded in `docs/decisions.md`: a preview with no settings failed its build, and the redeployed `dev` preview showed the SANDBOX badge on a phone. Roadmap 0.8 is Done.
+  - Set up on the real services: Neon project `spring-grass-34506834` with `main` and `dev` branches; Vercel settings for the `dev` preview and Production's `APP_ENV`, then Production's `DATABASE_URL` (Secret, 2026-11-25). Proofs recorded in `docs/decisions.md`: a preview with no settings failed its build, and the redeployed `dev` preview showed the SANDBOX badge on a phone. Roadmap 0.8 is Done.
   - Migration tests proven on pull request #15: a schema change without a migration, and a migration that can't apply, each turned CI red at the intended step, then were reverted.
 
 ### Changed
