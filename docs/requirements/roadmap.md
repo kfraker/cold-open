@@ -45,7 +45,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - A preview with no database setting fails instead of falling back to production.
   - Missing settings stop the app at startup with a clear message.
   - Connection strings are entered without ever being shown.
-  - *Status: the migration test proven with two deliberate failures on #15; a `dev` preview with no settings failed its build; with the settings added, the redeployed preview showed the SANDBOX badge on a phone (2026-11-16). Production's `DATABASE_URL` is added before the next release to `main`.*
+  - *Status: the migration test proven with two deliberate failures on #15; a `dev` preview with no settings failed its build; with the settings added, the redeployed preview showed the SANDBOX badge on a phone (2026-11-16). Production's `DATABASE_URL` was added on 2026-11-25 (Secret, Production only); the next release to `main` is its first build.*
 - **0.9 Performance budget** (S).
   - Lighthouse CI checks page weight, LCP and blocking time on mobile settings.
   - A typing benchmark, built from the spike's, measures keystroke-to-paint time on a 150-page script. In Chromium at full speed on the CI runner, it fails the build above 50 ms at the 95th percentile. The 4×-slower result is reported in the run summary, not enforced.
