@@ -86,6 +86,18 @@ The complete technical record of changes, written for developers. Plain-language
   - CodeQL fix (`js/file-system-race`): `db:paste-url` reads `.env` once, treating a missing file as empty, rather than checking it exists and then reading it. A new `.env` is created readable only by its owner (on macOS and Linux).
   - Set up on the real services: Neon project `spring-grass-34506834` with `main` and `dev` branches; Vercel settings for the `dev` preview and Production's `APP_ENV`, then Production's `DATABASE_URL` (Secret, 2026-11-25). Proofs recorded in `docs/decisions.md`: a preview with no settings failed its build, and the redeployed `dev` preview showed the SANDBOX badge on a phone. Roadmap 0.8 is Done.
   - Migration tests proven on pull request #15: a schema change without a migration, and a migration that can't apply, each turned CI red at the intended step, then were reverted.
+- Performance budget (story 0.9):
+  - Dev dependencies: `@tiptap/core@3.33.1`, `@tiptap/pm@3.33.1`, `lighthouse@13.5.0`, `chrome-launcher@1.2.3`. `npm audit` unchanged (16 moderate), license check passes.
+  - `src/lib/bench/sample-script.ts`: seeded sample screenplay generator, rewritten from spike 0.S, with a word-wrap page estimate (`wrappedLines`, `estimatePages`). 10 unit tests; coverage stays 100%.
+  - `/bench/typing` test page (`src/routes/bench/typing/`): plain TipTap with six screenplay elements and Enter/Tab, loaded only on that page, labelled for screen readers. Served only when `APP_ENV` is `sandbox`; production returns 404. Exposes `window.__typingBench` (cursor placement, reset, keystroke-to-paint stats).
+  - `playwright.perf.config.ts` and `perf/`, run by `npm run test:perf` (also part of `npm test`): Chromium only, one worker, no retries, against the production build with sandbox settings.
+    - `perf/typing.perf.ts`: 150-page script, about 119 keys at 2%, 50% and 98% of the script, 30 ms apart. Fails if full-speed p95 is over 50 ms; repeats with `Emulation.setCPUThrottlingRate` 4 and reports only.
+    - `perf/lighthouse.perf.ts`: Lighthouse performance category on default mobile settings, 3 runs per page, median checked against `perf/budget.ts` (LCP 2,500 ms, TBT 200 ms, script transfer 100 KB for `/`).
+    - Both write a Markdown table to `$GITHUB_STEP_SUMMARY` (or the console locally) and JSON to `test-results/perf/`.
+  - CI `browsers` job: a performance step after the flow report, results uploaded as the `performance-results` artifact (90 days). Timeout 20 → 25 minutes.
+  - Dependabot ignores `lighthouse` 13.6.0 and later (adds the FSL-1.1 Sentry CLI through `@sentry/node` 11).
+  - `e2e/sandbox.e2e.ts`: the sandbox serves `/bench/typing` (all five projects), and a production server answers 404 for it. `startWith()` can now request any path and returns the status.
+  - Local calibration on the spike's machine: full-speed p95 18 ms (spike 18 ms), 4× p95 47–49 ms (spike, no page breaks, 50–56 ms). `/` on Lighthouse mobile: LCP about 1.4 s, TBT 0 ms, 37.2 KB of JavaScript.
 
 ### Changed
 - Dependabot skips major versions of `@types/node` (kept on 24 to match the Node pin) and `typescript` (`svelte-check@4.7.7` doesn't support 7 yet).

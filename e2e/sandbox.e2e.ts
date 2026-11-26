@@ -13,13 +13,17 @@ test('the sandbox shows a SANDBOX badge', async ({ page }) => {
 });
 
 /**
- * Starts the built app with the given settings, and returns everything it printed, plus the home
- * page's HTML if it started. The settings fully replace the test ones, and an empty value
+ * Starts the built app with the given settings, and returns everything it printed, plus a page's
+ * HTML and status if it started (the home page unless `path` says otherwise). The settings fully replace the test ones, and an empty value
  * overrides a local .env, so it counts as missing. The system picks a free port, and the address
  * comes from the app's own output, so a test can never reach some other server by mistake.
  */
-async function startWith(settings: Record<string, string>): Promise<{
+async function startWith(
+	settings: Record<string, string>,
+	path = '/'
+): Promise<{
 	html?: string;
+	status?: number;
 	output: string;
 }> {
 	const child = spawn(
@@ -47,7 +51,10 @@ async function startWith(settings: Record<string, string>): Promise<{
 		while (Date.now() < deadline) {
 			// The address Vite prints once it's listening.
 			const address = output.match(/http:\/\/127\.0\.0\.1:\d+\//)?.[0];
-			if (address) return { html: await (await fetch(address)).text(), output };
+			if (address) {
+				const response = await fetch(new URL(path, address));
+				return { html: await response.text(), status: response.status, output };
+			}
 			if (child.exitCode !== null || child.signalCode !== null) return { output };
 			await new Promise((resolve) => setTimeout(resolve, 100));
 		}
@@ -99,4 +106,20 @@ test.describe('startup settings', () => {
 		expect(html, output).toContain('<h1>Cold Open</h1>');
 		expect(html).not.toContain('sandbox-badge');
 	});
+
+	// Story 0.9: the typing benchmark's test page is only for the sandbox.
+	test('production answers "not found" for the typing benchmark page', async () => {
+		const { status, output } = await startWith(
+			{ APP_ENV: 'production', DATABASE_URL: PRODUCTION_URL },
+			'/bench/typing'
+		);
+		expect(status, output).toBe(404);
+	});
+});
+
+test('the sandbox serves the typing benchmark page', async ({ page }) => {
+	await page.goto('/bench/typing?pages=3');
+	await expect(page.getByRole('heading', { level: 1, name: 'Typing benchmark' })).toBeVisible();
+	await expect(page.getByTestId('bench-status')).toContainText('about 3 pages');
+	await expect(page.locator('.ProseMirror .el-scene').first()).toBeVisible();
 });

@@ -16,3 +16,4 @@ What changed in each version, in plain language, one line per change. The [chang
 - The first automatic dependency updates (small fixes to the build tools) are in.
 - Set up the database, with a separate sandbox for testing. Everything except the live site shows a SANDBOX badge, and a setup pointed at the wrong database refuses to start.
 - Updated the app framework to fix two security problems found in it, one of which could have exposed server secrets to the browser.
+- Every change is now checked for speed: the home page must load quickly on a simulated mid-range phone, and typing in a 150-page script must stay fast, or the change can't go in.
