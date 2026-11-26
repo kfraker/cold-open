@@ -32,15 +32,14 @@ Reasons for each choice are in the [decision log](docs/decisions.md).
 - a [user flow coverage report](docs/user-flows.md) that names the gaps, and fails if a proven flow loses its test;
 - a dependency license check and `npm audit`;
 - database migrations applied to a throwaway Postgres, with a check that the schema and the migrations agree;
-- tests that the app refuses to start with missing or crossed settings, so it can never fall back to the real database.
+- tests that the app refuses to start with missing or crossed settings, so it can never fall back to the real database;
+- a performance budget: Lighthouse on mobile settings fails the run if a page loads too slowly or carries too much JavaScript, and a typing benchmark fails it if a keystroke in a 150-page script takes over 50 ms to appear (95th percentile). Both tables are added to each run's summary.
 
 The same formatting, lint and type checks also run before every commit.
 
 **Security scanning:** CodeQL scans the code and workflows on every pull request, and a pull request whose scan finds a high or critical alert can't merge into `main`. Dependabot watches dependencies and proposes updates weekly, and secret scanning blocks a push containing a recognised secret. `main` and `dev` change only through a pull request with every check passing, with no bypass for anyone ([rules](.github/rulesets/README.md), [security policy](SECURITY.md)).
 
 There are no features yet, so there are only a few tests. Most of them prove the checks above actually catch problems.
-
-**Planned:** a performance budget and a typing-speed benchmark (story 0.9).
 
 **Real data stays separate:** local work and the preview use a sandbox database and show a SANDBOX badge; only the live site uses the real one. A setup pointed at the wrong database refuses to start ([how](docs/decisions.md#database-sandbox-2026-11-09)).
 

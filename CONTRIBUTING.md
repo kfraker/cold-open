@@ -72,7 +72,8 @@ npm run dev                       # the app at http://localhost:5173
 | `npm run db:generate` | Write a migration in `drizzle/` for a change to `src/lib/server/db/schema.ts` |
 | `npm run db:check` | Check the migration files are consistent |
 | `npm run db:migrate` | Apply new migrations to the sandbox (refuses any other database) |
-| `npm test` | Unit tests with coverage, browser tests and the flow report |
+| `npm run test:perf` | Performance budget: the typing benchmark and Lighthouse, in Chromium (limits in `perf/budget.ts`) |
+| `npm test` | Unit tests with coverage, browser tests, the flow report and the performance budget |
 
 For browser tests, install all three engines once: `npx playwright install chromium firefox webkit`.
 

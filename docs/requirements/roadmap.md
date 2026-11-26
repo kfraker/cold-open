@@ -51,6 +51,7 @@ Sizes: **S** is about one sitting, **M** is a couple of sittings.
   - A typing benchmark, built from the spike's, measures keystroke-to-paint time on a 150-page script. In Chromium at full speed on the CI runner, it fails the build above 50 ms at the 95th percentile. The 4×-slower result is reported in the run summary, not enforced.
   - The CI runner's results are calibrated against the spike's numbers, and recorded.
   - Both checks fail the build when over budget, proven with a deliberate breach.
+  - *Status: both checks built and passing locally, calibrated on the spike's machine (2026-11-26). The CI runner's numbers and the deliberate breaches come with the pull request.*
 - **0.10 Design direction** (M).
   - 2–3 clickable mockups of the dark studio, three-pane look, each in light and dark.
   - The owner picks one, which becomes design tokens and base components that pass WCAG 2.2 AA contrast in both themes.
